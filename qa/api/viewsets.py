@@ -1,10 +1,12 @@
+from django.http import HttpResponse
+from json import loads
 from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from qa.api.serializers import QuestionSerializer, AnswerSerializer, CommentSerializer
 from qa.models import Question, Answer, Comment
 
-
+'''
 class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
     queryset = Question.objects.all()
@@ -16,12 +18,23 @@ class AnswerViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+'''
+
+@api_view(['GET'])
+def get_routes(request, format=None):
+    '''view that returns all the routes of the api'''
+    routes = [
+        '"questions": "http://127.0.0.1:8000/api/questions/"',
+        '"answers": "http://127.0.0.1:8000/api/answers/"',
+        '"comments": "http://127.0.0.1:8000/api/comments/"'
+    ]
+    return Response(routes)
 
 
 # questions
 @api_view(['GET', 'POST'])
 def question_list(request, format=None):
-    ''' view that give us the possibility of get a 
+    ''' view that gives us the possibility of get a 
         list of all questions and/or add new ones'''
 
     if request.method == 'GET':
@@ -35,9 +48,10 @@ def question_list(request, format=None):
         serializer = QuestionSerializer(data=request.data)
 
         # verifies if the serialized data is valid and, if yes, save it
-        if serializer.is_valid():
+        if serializer.is_valid() and request.data['vote']==0:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -69,19 +83,41 @@ def question(request, id, format=None):
         question.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#def question_vote(request)
+
+@api_view(['GET'])
+def question_vote(request, id, format=None):
+    '''view that, passed a question by it's id, 
+        increments one vote in this question'''
+
+    # verifies if the question exists through it's id and return a 404 ERROR if not
+    try:
+        question = Question.objects.get(pk=id)            
+    except Question.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    # gets the current number of votes, adds one and passes it as request's voting field
+    request.data['vote'] = question.vote + 1
+    
+    # updates the data of an existing question and verifies if it still valid
+    serializer = QuestionSerializer(question, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # answers
 @api_view(['GET', 'POST'])
 def answer_list(request, format=None):
-    ''' view that give us the possibility of get a 
+    ''' view that gives us the possibility of get a 
         list of all answers and/or add new ones'''
 
     if request.method == 'GET':
         # get all the answers on the data base and serialize the data to return
         answers = Answer.objects.all()
-        serializer = Answer(answers, many=True)
+        serializer = AnswerSerializer(answers, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
@@ -89,13 +125,12 @@ def answer_list(request, format=None):
         serializer = AnswerSerializer(data=request.data)
 
         # verifies if the serialized data is valid and, if yes, save it
-        if serializer.is_valid():
+        if serializer.is_valid() and request.data['vote']==0:
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# one specific answer
-# can get the data of this answer, update or delete it
 @api_view(['GET', 'PUT', 'DELETE'])
 def answer(request, id, format=None):
     ''' view that manipulates a specific answer, selected by it's id,
@@ -125,11 +160,32 @@ def answer(request, id, format=None):
         answer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#def answer_vote(request)
+
+@api_view(['GET'])
+def answer_vote(request, id, format=None):
+    '''view that, passed an answer by it's id, 
+        increments one vote in this answer'''
+
+    # verifies if the answer exists through it's id and return a 404 ERROR if not
+    try:
+        answer = Answer.objects.get(pk=id)            
+    except Answer.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    # gets the current number of votes, adds one and passes it as request's voting field
+    request.data['vote'] = answer.vote + 1
+    
+    # updates the data of an existing answer and verifies if it still valid
+    serializer = AnswerSerializer(answer, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
-
+# comments
 @api_view(['GET', 'POST'])
 def comment_list(request, format=None):
     if request.method == 'GET':
