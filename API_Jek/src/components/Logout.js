@@ -5,8 +5,13 @@ const clientId =
 
 function Logout() {
   const onSuccess = () => {
-    console.log('Logout made successfully');
-    alert('Logout made successfully');
+    if(window.sessionStorage.getItem("id_token") == null){
+      alert('You are not logged in');
+    }
+    else{
+      window.sessionStorage.removeItem("id_token");
+      alert('Logout made successfully');
+    }
   };
 
   return (
