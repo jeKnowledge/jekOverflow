@@ -1,0 +1,36 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 60px;
+  background: rgb(124, 204, 237);
+}
+
+.nav_container {
+  width: 100%;
+  margin-left: 120px;
+  margin-right: 163px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo-image {
+  height: 30px;
+  margin-top: 3%;
+  margin-right: 3%;
+}
+.nav_logo {
+  display: flex;
+}
+.nav_brand, .nav_brand:hover {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 25px;
+}
+.nav_link, .nav_link:hover {
+  color: white;
+  text-decoration: none;
+  list-style: none;
+  font-size: 20px;
+}

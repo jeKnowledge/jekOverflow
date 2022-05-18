@@ -1,0 +1,10 @@
+.sb_container{
+    width: 80%;
+}
+.sb_container > input{
+    width: 90%;
+    border-radius: 5px;
+    border:none;
+    border:1px rgb(22, 144, 195) solid;
+    height: 40px;
+}

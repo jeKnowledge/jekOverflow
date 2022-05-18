@@ -12,7 +12,7 @@ class Question(models.Model):
     body = models.TextField()
     created = models.DateTimeField('date published', auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    vote = models.IntegerField(default=0)
+    vote = models.IntegerField(0)
 
     def __str__(self):
         return self.title
@@ -26,7 +26,7 @@ class Answer(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    vote = models.IntegerField(default=0)
+    vote = models.IntegerField(0)
 
     def __str__(self):
         return self.body[0:50]

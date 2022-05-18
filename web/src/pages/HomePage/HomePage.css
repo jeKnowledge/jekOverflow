@@ -1,0 +1,41 @@
+.top {
+    text-align: center;
+}
+.bottom {
+    display: flex;
+}
+.bottom-content-top {
+    display: flex;
+}
+.bottom-content {
+    width: 71.5%;
+}
+.bct2 {
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: 0;
+}
+.bottom-content-mid {
+    margin-left: 56.5%;
+    margin-right: auto;
+    margin-top: 4%;
+    margin-bottom: 3%;
+}
+.title {
+    margin-left: 10%;
+    margin-top: 7.5%;
+    width: 100%;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 47px;
+    
+    color: #3E3C39;
+}
+.questions-list {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25.94px;
+}

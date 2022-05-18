@@ -1,0 +1,19 @@
+.answer-container {
+    display: table;
+    width: 100%;
+    border: 1px solid;
+    border-color: rgb(174, 173, 170);
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    margin-top: 2%;
+}
+.answer-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20.75px;
+    color: #3E3C39;
+}
+.space {
+    margin-bottom: 2%;
+}
