@@ -5,9 +5,10 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
 import Answer from '../../components/Answers/Answer'
 import axios from 'axios'
-import arrowup from './arrowup.png'
-import arrowdown from './arrowdown.png'
+import arrowup from './../../assets/img/arrowup.png'
+import arrowdown from './../../assets/img/arrowdown.png'
 import './QuestionPage.css'
+import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
 
 const QuestionPage = () => {
     let { id } = useParams()
@@ -15,7 +16,7 @@ const QuestionPage = () => {
     let [answers, setAnswers] = useState([]);
 
     const voteUP = () => {
-      const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote/`
+      const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-up/`
       const getVote = axios.get(voteAPI)
       axios.all([getVote]).then(
         axios.spread((...allData) => {
@@ -26,7 +27,14 @@ const QuestionPage = () => {
     }
 
     const voteDown = () => {
-      console.log("VOTE DOWN");
+      const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-down/`
+      const getVote = axios.get(voteAPI)
+      axios.all([getVote]).then(
+        axios.spread((...allData) => {
+          const allDataVote = allData[0].data
+          setQuestion(allDataVote)
+        })
+      )
     }
 
     useEffect( () => {
@@ -71,9 +79,12 @@ const QuestionPage = () => {
                 </div>
                 <div className='answers-list'>
                     {answers.map((answer, index) => (
-                        <Answer key={index} answer={answer} />
+                        answer.question === Number(id)
+                        ? (<Answer key={index} answer={answer} />)
+                        : null
                     ))}
                 </div>
+                <div><MakeNewAnswer/></div>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@ import Axios from "axios";
 const MakeQuestionPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-
+  
   const handleSubmit = (event) => {
     Axios.post(`http://127.0.0.1:8000/api/questions/`, {
       'title': title,
@@ -14,10 +14,10 @@ const MakeQuestionPage = () => {
       'vote': 0
       },
       {
-          headers: {
-              "Authorization": `AUTHORIZATION_KEY`,
-              "Content-Type": 'application/json'
-          }
+        headers: {
+            "Authorization": `AUTHORIZATION_KEY`,
+            "Content-Type": 'application/json'
+        }
       }
     )
     .then(res => console.log(res))

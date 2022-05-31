@@ -8,13 +8,15 @@ const Sidebar = () => {
         <ul className='sidebar-list'>
             {SidebarData.map((value, key) => {
                 return (
-                <li key={key}
-                    className='row'
-                    onClick={() => {
-                        window.location.pathname = value.link;
-                    }}>
-                    <div>{value.title}</div>
-                </li>)
+                <div className='row-separator'>
+                    <li key={key}
+                        className='row'
+                        onClick={() => {
+                            window.location.pathname = value.link;
+                        }}>
+                        <div>{value.title}</div>
+                    </li>
+                </div>)
             })}
         </ul>
     </div>
