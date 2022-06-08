@@ -7,6 +7,7 @@ import Answer from '../../components/Answers/Answer'
 import axios from 'axios'
 import arrowup from './../../assets/img/arrowup.png'
 import arrowdown from './../../assets/img/arrowdown.png'
+import qbutton from './../../assets/img/qbutton.png'
 import './QuestionPage.css'
 import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
 
@@ -67,13 +68,13 @@ const QuestionPage = () => {
             <div className='qp-bottom-content'>
                 <div className='qp-bottom-content-top'>
                     <div className='qp-title'><p>{question?.title}</p></div>
-                    <div className='qp-bct2'><Button variant='primary' height='sm' href="/make-question/">Fazer Pergunta</Button></div>
+                    <div className='qp-bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} href="/make-question/"><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='qp-body'>
                     <div className='qp-body-left'>
-                        <button><img src={arrowup} alt="arrowUP" onClick={voteUP} /></button>
+                        <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={arrowup} alt="arrowUP" onClick={voteUP}/></Button>
                         <p className='qp-vote'>{question?.vote}</p>
-                        <button><img src={arrowdown} alt="arrowDOWN" onClick={voteDown} /></button>
+                        <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={arrowdown} alt="arrowDOWN" onClick={voteDown}/></Button>
                     </div>
                     <div className='qp-body-right'><p>{question?.body}</p></div>
                 </div>

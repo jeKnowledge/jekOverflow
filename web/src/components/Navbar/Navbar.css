@@ -8,7 +8,7 @@
 
 .nav_container {
   width: 100%;
-  margin-left: 120px;
+  margin-left: 6.5%;
   margin-right: 163px;
   display: flex;
   align-items: center;
@@ -33,4 +33,12 @@
   text-decoration: none;
   list-style: none;
   font-size: 20px;
+}
+.nav_container_right {
+  display: flex;
+  width: 15%;
+}
+.nav_item {
+  margin-left: 5%;
+  margin-top: 4%;
 }

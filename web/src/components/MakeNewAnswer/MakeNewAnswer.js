@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import pbutton from './../../assets/img/pbutton.png'
+import Button from 'react-bootstrap/Button'
 import './MakeNewAnswer.css'
 
 const MakeNewAnswer = () => {
@@ -39,7 +41,7 @@ const MakeNewAnswer = () => {
                 </form>
             </div>
             <div className='mna-send-button'>
-              <button onClick={handleSubmit} type="button" className="btn btn-primary" size="sm">Publicar</button>
+              <Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={handleSubmit}><img src={pbutton} alt="pbutton"/></Button>
             </div>
         </div>
     )

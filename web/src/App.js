@@ -8,11 +8,13 @@ import MakeQuestionPage from "./pages/MakeQuestionPage/MakeQuestionPage";
 import AllQuestionsPage from "./pages/AllQuestionsPage/AllQuestionsPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import TagsPage from "./pages/TagsPage/TagsPage"
+import LoginPage from "./pages/LoginPage/Login"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login/" element={<LoginPage />} />
         <Route path="/home/" element={<HomePage />} />
         <Route path="questions/:id/" element={<QuestionPage />} />
         <Route path="questions/" element={<AllQuestionsPage />} />

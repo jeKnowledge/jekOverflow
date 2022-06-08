@@ -4,6 +4,7 @@ import Question from '../../components/Questions/Question'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button';
+import qbutton from './../../assets/img/qbutton.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllQuestionsPage = () => {
@@ -27,7 +28,7 @@ const AllQuestionsPage = () => {
             <div className='aqp-bottom-content'>
                 <div className='aqp-bottom-content-top'>
                     <div className='aqp-bct1'><h1 className='aqp-title'>Perguntas</h1></div>
-                    <div className='aqp-bct2'><Button variant='primary' height='sm' href="/make-question/">Fazer Pergunta</Button></div>
+                    <div className='aqp-bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} href="/make-question/"><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='aqp-bottom-content-mid'>
                     <div className="btn-group">
