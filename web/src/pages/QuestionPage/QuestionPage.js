@@ -13,7 +13,7 @@ import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
 
 const QuestionPage = () => {
     let { id } = useParams()
-    let [question, setQuestion] = useState(null)
+    let [question, setQuestion] = useState(null);
     let [answers, setAnswers] = useState([]);
 
     const voteUP = () => {
@@ -39,26 +39,39 @@ const QuestionPage = () => {
     }
 
     useEffect( () => {
-        const fetchData = () => {
-          const questionAPI = `http://127.0.0.1:8000/api/questions/${id}/`
-          const answersAPI = `http://127.0.0.1:8000/api/answers/`
-      
-          const getQuestion = axios.get(questionAPI)
-          const getAsnwers = axios.get(answersAPI)
-          axios.all([getQuestion, getAsnwers]).then(
-            axios.spread((...allData) => {
-              const allDataQuestion = allData[0].data
-              const allDataAnswers = allData[1].data
-      
-              setQuestion(allDataQuestion)
-              console.log(allDataAnswers)
-              setAnswers(allDataAnswers)
-            })
-          )
-        }
+      const fetchData = () => {
+        const questionAPI = `http://127.0.0.1:8000/api/questions/${id}/`
+        const answersAPI = `http://127.0.0.1:8000/api/answers/`
     
-        fetchData()
-      },[id])
+        const getQuestion = axios.get(questionAPI)
+        const getAsnwers = axios.get(answersAPI)
+        axios.all([getQuestion, getAsnwers]).then(
+          axios.spread((...allData) => {
+            const allDataQuestion = allData[0].data
+            const allDataAnswers = allData[1].data
+    
+            setQuestion(allDataQuestion)
+            console.log(allDataAnswers)
+            setAnswers(allDataAnswers)
+          })
+        )
+      }
+
+      const viewUpdate = () => {
+        const viewAPI = `http://127.0.0.1:8000/api/questions/${id}/nview-update/`
+        const getView = axios.get(viewAPI)
+        axios.all([getView]).then(
+          axios.spread((...allData) => {
+            const allDataView = allData[0].data
+            setQuestion(allDataView)
+          })
+        )
+      }
+
+      fetchData()
+      viewUpdate()
+    },[id])
+    
 
     return (
     <div className='questionpage'>

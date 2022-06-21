@@ -9,6 +9,12 @@ const MakeNewAnswer = () => {
     let { id } = useParams()
     const [body, setBody] = useState('');
 
+    const nanswersUpdate = () => {
+      const answerAPI = `http://127.0.0.1:8000/api/questions/${id}/nanswers-update/`
+      axios.get(answerAPI)
+      window.location.reload(false);
+    }
+
     const handleSubmit = (event) => {
         axios.post(`http://127.0.0.1:8000/api/answers/`, {
           'body': body,
@@ -23,7 +29,7 @@ const MakeNewAnswer = () => {
         )
         .then(res => console.log(res))
         .catch(error => console.err(error))
-        this.props.history.push('/home')
+        nanswersUpdate()
       }
 
     return (

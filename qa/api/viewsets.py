@@ -1,6 +1,4 @@
-from django.http import HttpResponse
-from json import loads
-from rest_framework import status, viewsets
+from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from qa.api.serializers import QuestionSerializer, AnswerSerializer, CommentSerializer
@@ -88,6 +86,8 @@ def question_voteUp(request, id, format=None):
         request.data['vote'] = question.vote + 1
         request.data['title'] = question.title
         request.data['body'] = question.body
+        request.data['n_answers'] = question.n_answers
+        request.data['n_views'] = question.n_views
         
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
@@ -100,7 +100,7 @@ def question_voteUp(request, id, format=None):
 @api_view(['GET'])
 def question_voteDown(request, id, format=None):
     '''view that, passed a question by it's id, 
-        increments one vote in this question'''
+        decrements one vote in this question'''
 
     if request.method == 'GET':
         # verifies if the question exists through it's id and return a 404 ERROR if not
@@ -113,6 +113,62 @@ def question_voteDown(request, id, format=None):
         request.data['vote'] = question.vote - 1
         request.data['title'] = question.title
         request.data['body'] = question.body
+        request.data['n_answers'] = question.n_answers
+        request.data['n_views'] = question.n_views
+
+        # updates the data of an existing question and verifies if it still valid
+        serializer = QuestionSerializer(question, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def question_viewUPDT(request, id, format=None):
+    '''view that, passed a question by it's id, 
+        increments one view in this question'''
+
+    if request.method == 'GET':
+        # verifies if the question exists through it's id and return a 404 ERROR if not
+        try:
+            question = Question.objects.get(pk=id)            
+        except Question.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, subtracts one and passes it as request's voting field
+        request.data['n_views'] = question.n_views + 1
+        request.data['vote'] = question.vote
+        request.data['title'] = question.title
+        request.data['body'] = question.body
+        request.data['n_answers'] = question.n_answers
+        
+        # updates the data of an existing question and verifies if it still valid
+        serializer = QuestionSerializer(question, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def question_nanswersUPDT(request, id, format=None):
+    '''view that, passed a question by it's id, 
+        increments one view in this question'''
+
+    if request.method == 'GET':
+        # verifies if the question exists through it's id and return a 404 ERROR if not
+        try:
+            question = Question.objects.get(pk=id)            
+        except Question.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, subtracts one and passes it as request's voting field
+        request.data['n_answers'] = question.n_answers + 1
+        request.data['vote'] = question.vote
+        request.data['title'] = question.title
+        request.data['body'] = question.body
+        request.data['n_views'] = question.n_views
         
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)

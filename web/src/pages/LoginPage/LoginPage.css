@@ -1,0 +1,21 @@
+.jek-container {
+    display: flex;
+    margin-top: 16%;
+}
+
+.jek-text {
+    padding: 1%;
+    width: 20%;
+}
+
+.jek-logo {
+    width: 5%;
+    margin-left: 38%;
+}
+.login-container {
+    text-align: center;
+}
+.login-button {
+    margin-top: 2%;
+    width: 80%;
+}

@@ -1,7 +1,5 @@
-from datetime import datetime
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
 
 
@@ -13,12 +11,15 @@ class Question(models.Model):
     created = models.DateTimeField('date published', auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     vote = models.IntegerField(0)
+    n_answers = models.IntegerField(default=0)
+    n_views = models.IntegerField(default=0)
+    time = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
-    def was_published_recently(self):
-        return self.created >= timezone.now() - datetime.timedelta(days=1)
+    def published(self):
+        return (timezone.now() - self.updated).total_seconds()
 
 class Answer(models.Model):
     #user = models.ForeignKey(User, on_delete=CASCADE)

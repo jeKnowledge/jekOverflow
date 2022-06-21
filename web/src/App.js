@@ -8,7 +8,7 @@ import MakeQuestionPage from "./pages/MakeQuestionPage/MakeQuestionPage";
 import AllQuestionsPage from "./pages/AllQuestionsPage/AllQuestionsPage";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import TagsPage from "./pages/TagsPage/TagsPage"
-import LoginPage from "./pages/LoginPage/Login"
+import LoginPage from "./pages/LoginPage/LoginPage"
 
 function App() {
   return (

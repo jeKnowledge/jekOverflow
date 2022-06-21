@@ -10,7 +10,7 @@ const Navbar = (props) => {
       <div className="nav_container">
         <div className='nav_logo'>
           <img className='nav-logo-image' src={logo} alt="jekLogo" />
-          <a href="/home/" className='nav_brand'>JekOverflow</a>
+          <a href="/home/" className='nav_brand'>jeKoverflow</a>
         </div>
         <SearchBar />
         <div className='nav_container_right'>
