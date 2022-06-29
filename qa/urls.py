@@ -5,6 +5,8 @@ from qa.api import viewsets
 app_name='qa'
 urlpatterns = [
     path('', viewsets.get_routes),
+    path('users/', viewsets.user_list),
+    path('users/<str:token>/', viewsets.user),
     path('questions/', viewsets.question_list),
     path('questions/<int:id>/', viewsets.question),
     path('questions/<int:id>/vote-up/', viewsets.question_voteUp),

@@ -1,19 +1,67 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import login from './../../assets/img/login.png'
 import loginText from './../../assets/img/loginText.png'
 import jklogoB from './../../assets/img/jklogoB.png'
 import jwt_decode from 'jwt-decode'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
+import axios from 'axios'
 import './LoginPage.css'
 
 function Login() {
+  let [users, setUsers] = useState([]);
 
   function handleCallbackResponse(response) {
+    var exists = false
+    const usersAPI = `http://127.0.0.1:8000/api/users/`    
+    const getUsers = axios.get(usersAPI)
+    axios.all([getUsers]).then(
+      axios.spread((...allData) => {
+        const allDataUsers = allData[0].data
+        setUsers(allDataUsers)
+      })
+    )
+
     var userObject = jwt_decode(response.credential);
     if (userObject.hd === 'jeknowledge.com' && userObject.email_verified) {
-      console.log(userObject.name)
-      console.log(userObject.email)
-      console.log(userObject.sub)
+      console.log(userObject)
+      users.map((user) => (
+        user.id_token === userObject.sub
+        ? exists = true
+        : null
+      ))
+      console.log(exists)
+      if (!exists) {
+        console.log('a')
+        axios.post(`http://127.0.0.1:8000/api/users/`, {
+          'id_token': userObject.sub,
+          'username': userObject.name,
+          'email': userObject.email,
+          'image': userObject.picture,
+          'is_active': true
+        },
+        {
+          headers: {
+              "Authorization": `AUTHORIZATION_KEY`,
+              "Content-Type": 'application/json'
+          }
+        }
+        )
+      }
+      else {
+        console.log('b')
+        axios.put(`http://127.0.0.1:8000/api/users/${userObject.sub}/`, {
+          'id_token': userObject.sub,
+          'username': userObject.name,
+          'email': userObject.email
+        },
+        {
+          headers: {
+              "Authorization": `AUTHORIZATION_KEY`,
+              "Content-Type": 'application/json'
+          }
+        }
+        )
+      }
     }
   }
 
@@ -28,7 +76,7 @@ function Login() {
       document.getElementById("signInDiv"),
       { theme:"outline", size:"large", shape:"circle"},
     )
-  }, []);
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='login-page'>

@@ -14,29 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.db import router
 from django.urls import path, include
-
-from rest_framework import routers
-from qa.api import viewsets as qaviewsets
-
-'''
-route = routers.DefaultRouter()
-route.register('questions', qaviewsets.QuestionViewSet, basename="Questions")
-#route.register('questions', qaviewsets.question_list, basename="Questions List")
-#route.register('questions/<int:id>', qaviewsets.question, basename="Question")
-
-route.register('answers', qaviewsets.AnswerViewSet, basename="Answers")
-#route.register('answers', qaviewsets.answer_list, basename="Answers List")
-#route.register('answers/<int:id>', qaviewsets.answer, basename="Answers")
-
-route.register('comments', qaviewsets.CommentViewSet, basename="Comments")
-#route.register('comments', qaviewsets.answer_list, basename="Comments List")
-#route.register('comments/<int:id>', qaviewsets.answer, basename="Comment")
-'''
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('qa.urls')),
-    #path('api/', include(route.urls)),
 ]
