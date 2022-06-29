@@ -23,13 +23,9 @@ function Login() {
 
     var userObject = jwt_decode(response.credential);
     if (userObject.hd === 'jeknowledge.com' && userObject.email_verified) {
-      console.log(userObject)
-      users.map((user) => (
-        user.id_token === userObject.sub
-        ? exists = true
-        : null
-      ))
-      console.log(exists)
+      if (users.map((user) => { return user.id_token === userObject.sub}) !== []) {
+        exists = true
+      }
       if (!exists) {
         console.log('a')
         axios.post(`http://127.0.0.1:8000/api/users/`, {
@@ -52,7 +48,9 @@ function Login() {
         axios.put(`http://127.0.0.1:8000/api/users/${userObject.sub}/`, {
           'id_token': userObject.sub,
           'username': userObject.name,
-          'email': userObject.email
+          'email': userObject.email,
+          'image': userObject.picture,
+          'is_active': true
         },
         {
           headers: {
