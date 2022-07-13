@@ -1,28 +1,33 @@
 import React, { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import './MakeQuestionPage.css'
-import Axios from "axios";
+import axios from "axios";
+import Button from 'react-bootstrap/Button'
+import qbutton from './../../assets/img/qbutton.png'
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const MakeQuestionPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
   
+
   const handleSubmit = (event) => {
-    Axios.post(`http://127.0.0.1:8000/api/questions/`, {
+    axios.post(`http://127.0.0.1:8000/api/questions/`, {
       'title': title,
       'body': body,
-      'vote': 0
+      'vote': 0,
+      'user': location.state
       },
       {
-        headers: {
-            "Authorization": `AUTHORIZATION_KEY`,
-            "Content-Type": 'application/json'
-        }
+      headers: {
+          "Authorization": `AUTHORIZATION_KEY`,
+          "Content-Type": 'application/json'
+      }
       }
     )
-    .then(res => console.log(res))
-    .catch(error => console.err(error))
-    this.props.history.push('/home')
+    navigate('/home/')
   }
 
   return (
@@ -59,7 +64,7 @@ const MakeQuestionPage = () => {
                   </form>
                 </div>
                 <div className='mqbc-title-body-tag'><h2>Tags</h2></div>
-                <div className='mq-tag-com'><p>Adiciona ate (numero de tags a definir) que melhor descrevem a tua pergunta</p></div>
+                <div className='mq-tag-com'><p>Adiciona ate 3 que melhor descrevem a tua pergunta</p></div>
                 <div className='tag-box'>
                   <form>
                     <input className='mq-text-tag-post' type="text" required/>
@@ -68,7 +73,7 @@ const MakeQuestionPage = () => {
               </div>
             </div>
             <div className='send-button'>
-              <button onClick={handleSubmit} type="button" className="btn btn-primary" size="sm">Fazer Pergunta</button>
+            <div className='bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={handleSubmit} ><img src={qbutton} alt="qbutton"/></Button></div>
             </div>
         </div>
     </div>

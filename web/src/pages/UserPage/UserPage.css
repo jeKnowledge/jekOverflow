@@ -1,0 +1,15 @@
+.top-bottom-content {
+    display: flex;
+    margin-left: 3%;
+    margin-top: 3%;
+}
+.avatar-image{
+    border-radius: 50%;
+    width: 140px;
+}
+.tbc-image {
+    margin-right: 2%;
+}
+.tbc-username {
+    display: block;
+}

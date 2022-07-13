@@ -14,8 +14,15 @@
 }
 .login-container {
     text-align: center;
+    display: flex;
 }
 .login-button {
-    margin-top: 2%;
-    width: 80%;
+    width: auto;
+    position: absolute;
+    margin-left: 39%;
+    visibility: hidden;
+}
+.signIn {
+    position: absolute;
+    margin-left: 42%;
 }

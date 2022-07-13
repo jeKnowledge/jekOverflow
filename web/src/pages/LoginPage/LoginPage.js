@@ -3,7 +3,6 @@ import login from './../../assets/img/login.png'
 import loginText from './../../assets/img/loginText.png'
 import jklogoB from './../../assets/img/jklogoB.png'
 import jwt_decode from 'jwt-decode'
-import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import './LoginPage.css'
 
@@ -11,7 +10,7 @@ function Login() {
   let [users, setUsers] = useState([]);
 
   function handleCallbackResponse(response) {
-    var exists = false
+    let exists = false
     const usersAPI = `http://127.0.0.1:8000/api/users/`    
     const getUsers = axios.get(usersAPI)
     axios.all([getUsers]).then(
@@ -21,7 +20,8 @@ function Login() {
       })
     )
 
-    var userObject = jwt_decode(response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject)
     if (userObject.hd === 'jeknowledge.com' && userObject.email_verified) {
       if (users.map((user) => { return user.id_token === userObject.sub}) !== []) {
         exists = true
@@ -72,7 +72,7 @@ function Login() {
 
     google.accounts.id.renderButton(
       document.getElementById("signInDiv"),
-      { theme:"outline", size:"large", shape:"circle"},
+      { theme:"outline", size:"large", shape:"circle", logo_alignment: "center"},
     )
   }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
@@ -83,10 +83,9 @@ function Login() {
         <img className='jek-text' src={loginText} alt="loginText"/>
       </div>
       <div className='login-container'>
-        <Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}}><img className='login-button' src={login} alt="login"/></Button>
-        <div id="signInDiv"></div>
+        <img className='login-button' src={login} alt="login"/>
+        <div className='signIn' id="signInDiv"></div>
       </div>
-      <script src="https://apis.google.com/js/platform.js?onload=onLoadGoogleCallback" async defer></script>
     </div>
   );
 }

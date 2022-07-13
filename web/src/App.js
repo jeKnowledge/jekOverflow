@@ -6,7 +6,8 @@ import HomePage from './pages/HomePage/HomePage';
 import QuestionPage from "./pages/QuestionPage/QuestionPage";
 import MakeQuestionPage from "./pages/MakeQuestionPage/MakeQuestionPage";
 import AllQuestionsPage from "./pages/AllQuestionsPage/AllQuestionsPage";
-import UsersPage from "./pages/UsersPage/UsersPage";
+import AllUsersPage from "./pages/AllUsersPage/AllUsersPage";
+import UserPage from "./pages/UserPage/UserPage";
 import TagsPage from "./pages/TagsPage/TagsPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
 
@@ -19,7 +20,8 @@ function App() {
         <Route path="questions/:id/" element={<QuestionPage />} />
         <Route path="questions/" element={<AllQuestionsPage />} />
         <Route path="make-question/" element={<MakeQuestionPage />} />
-        <Route path="users/" element={<UsersPage />} />
+        <Route path="users/:id/" element={<UserPage />} />
+        <Route path="users/" element={<AllUsersPage />} />
         <Route path="tags/" element={<TagsPage />} />
       </Routes>
     </BrowserRouter>
