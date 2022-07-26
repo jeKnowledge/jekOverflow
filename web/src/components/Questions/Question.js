@@ -18,12 +18,14 @@ const Question = ({ question }) => {
       )
     }
 
+    getUser()
+  }, [question.user])
+
+  useEffect(() => {
     if (user) {
       setUsername(user.username)
     }
-
-    getUser()
-  }, [question.user, user])
+  }, [user])
 
   return (
     <div className='question-container'>

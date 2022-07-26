@@ -18,7 +18,9 @@ const MakeNewAnswer = () => {
     const handleSubmit = (event) => {
         axios.post(`http://127.0.0.1:8000/api/answers/`, {
           'body': body,
-          'question': Number(id)
+          'question': Number(id),
+          'created': new Date(),
+          'updated': new Date()
           },
           {
             headers: {

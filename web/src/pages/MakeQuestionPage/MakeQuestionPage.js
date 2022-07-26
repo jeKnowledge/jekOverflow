@@ -18,7 +18,9 @@ const MakeQuestionPage = () => {
       'title': title,
       'body': body,
       'vote': 0,
-      'user': location.state
+      'user': location.state,
+      'created': new Date(),
+      'updated': new Date()
       },
       {
       headers: {

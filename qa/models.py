@@ -22,8 +22,8 @@ class Question(models.Model):
     user = models.ForeignKey(NewUser, on_delete=CASCADE)
     title = models.CharField(max_length=100)
     body = models.TextField()
-    created = models.DateTimeField('date published', auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.CharField(max_length=100)
+    updated = models.CharField(max_length=100)
     vote = models.IntegerField(0)
     n_answers = models.IntegerField(default=0)
     n_views = models.IntegerField(default=0)
@@ -39,8 +39,8 @@ class Answer(models.Model):
     user = models.ForeignKey(NewUser, on_delete=CASCADE)
     question = models.ForeignKey(Question, on_delete=CASCADE)
     body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.CharField(max_length=100)
+    updated = models.CharField(max_length=100)
     vote = models.IntegerField(0)
 
     def __str__(self):
@@ -51,8 +51,8 @@ class Comment(models.Model):
     user = models.ForeignKey(NewUser, on_delete=CASCADE)
     answer = models.ForeignKey(Answer, on_delete=CASCADE)
     body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
+    created = models.CharField(max_length=100)
+    updated = models.CharField(max_length=100)
+    
     def __str__(self):
         return self.body[0:50]

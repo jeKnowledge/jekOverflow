@@ -1,10 +1,23 @@
 .sb_container{
-    width: 100%;
-}
-.sb_container > input{
     width: 88%;
     border-radius: 5px;
     border:none;
     border:1px rgb(22, 144, 195) solid;
+    background-color: white;
     height: 40px;
+    margin-left: 5%;
+    margin-right: 3%;
+    display: flex;
+}
+.sb_container img {
+    height: 16px;
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+}
+.sb_container > input{
+    width: 100%;
+    border-radius: 5px;
+    border:none;
+    outline: none;
+    height: 38px
 }

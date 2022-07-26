@@ -29,6 +29,9 @@ const Navbar = (props) => {
 
   useEffect(() => {
     getUser()
+  }, [])
+
+  useEffect(() => {
     if (user) {
       setUsername(user.username.split(' ')[0])
       setUserImage(user.image)
