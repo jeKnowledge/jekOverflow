@@ -1,7 +1,7 @@
 .usb_container{
     width: 40%;
     margin-left: 4%;
-    border-radius: 5px;
+    border-radius: 8px;
     border:none;
     border:1px #1690C3 solid;
     height: 40px;
@@ -16,7 +16,7 @@
     width: 95%;
     height: 100%;
     display: flex;
-    border-radius: 5px;
+    border-radius: 8px;
     border: none;
     outline: none;
 

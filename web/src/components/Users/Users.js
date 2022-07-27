@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import './Users.css'
 
 const Users = ({user}) => {
   return (
     <div className='user-container'>
-        <div className='user-image'>
-            {user.image}
-        </div>
+        <div><img className='user-image' src={user.image} alt='user-img'/></div>
         <div className='user-content'>
-            <div><Link to={`/users/${user.id_token}`}>{user.username}</Link></div>
-            <div className='user-name' >-locale-</div>
-            <div>30</div>
-            <div>tags</div>
+            <div><Link className='user-name' to={`/users/${user.id_token}`}>{user.username}</Link></div>
+            <div className='user-detail'>-locale-</div>
+            <div className='user-detail'>30</div>
+            <div className='user-detail'>tags</div>
         </div>
     </div>
   )

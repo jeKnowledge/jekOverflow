@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import login from './../../assets/img/login.png'
 import loginText from './../../assets/img/loginText.png'
 import jklogoB from './../../assets/img/jklogoB.png'
+import { useNavigate } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
 import './LoginPage.css'
 
 function Login() {
   let [users, setUsers] = useState([]);
+  const navigate = useNavigate()
 
   function handleCallbackResponse(response) {
     let exists = false
@@ -21,13 +23,11 @@ function Login() {
     )
 
     let userObject = jwt_decode(response.credential);
-    console.log(userObject)
     if (userObject.hd === 'jeknowledge.com' && userObject.email_verified) {
       if (users.map((user) => { return user.id_token === userObject.sub}) !== []) {
         exists = true
       }
       if (!exists) {
-        console.log('a')
         axios.post(`http://127.0.0.1:8000/api/users/`, {
           'id_token': userObject.sub,
           'username': userObject.name,
@@ -44,7 +44,6 @@ function Login() {
         )
       }
       else {
-        console.log('b')
         axios.put(`http://127.0.0.1:8000/api/users/${userObject.sub}/`, {
           'id_token': userObject.sub,
           'username': userObject.name,
@@ -60,6 +59,7 @@ function Login() {
         }
         )
       }
+      navigate('/home/', {state: userObject.sub})
     }
   }
 

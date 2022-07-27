@@ -4,7 +4,7 @@ import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import UserSearchBar from '../../components/UserSearchbar/UserSearchbar.jsx'
 import Users from '../../components/Users/Users'
-
+import './AllUsersPage.css'
 
 const AllUsersPage = () => {
   let [users, setUsers] = useState([])
@@ -33,6 +33,12 @@ const AllUsersPage = () => {
                     <UserSearchBar />
                   </div>
                   <div className='aup-cb-right'>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
+                    <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
                     <div>{users.map((user, index) => (<Users key={index} user={user} />))}</div>
                   </div>
               </div>

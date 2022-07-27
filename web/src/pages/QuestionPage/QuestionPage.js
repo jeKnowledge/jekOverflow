@@ -51,7 +51,6 @@ const QuestionPage = () => {
             const allDataAnswers = allData[1].data
     
             setQuestion(allDataQuestion)
-            console.log(allDataAnswers)
             setAnswers(allDataAnswers)
           })
         )

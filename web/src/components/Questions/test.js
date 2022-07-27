@@ -1,6 +1,6 @@
 const date1 = new Date("2022-07-13T16:53:39.362Z");
+const date2 = new Date("Wed Jul 13 2022 17:53:39 GMT+0100 (Horário de Verão da Europa Ocidental)")
 var date = new Date();
-
 let time = ''
 
 const diff = date.getTime() - date1.getTime();

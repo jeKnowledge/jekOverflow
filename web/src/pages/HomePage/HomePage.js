@@ -17,7 +17,6 @@ const HomePage = () => {
     useEffect(() => {
         getQuestions()
         getUser()
-        console.log('a')
     }, [])
     
     const toMakeQuestion = () => {

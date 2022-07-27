@@ -28,13 +28,15 @@
     text-decoration: none;
 }
 .right-data {
-    font-size: 14px;
-    width: 20%;
-    text-align: right;
-    color: rgb(62, 60, 57);
     display: table-cell;
     vertical-align: center;
 }
 .blue-name {
     color: #1690C3;
+}
+.right-datab {
+    font-size: 14px;
+    width: auto;
+    text-align: right;
+    color: rgb(62, 60, 57);
 }
