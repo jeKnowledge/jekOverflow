@@ -65,7 +65,7 @@ const Question = ({ question }) => {
         <div>{question.n_views}{' '}visualizações</div>
       </div>
       <div className='right-data'>
-        <div className='question-title'><Link className='question-link' to={`/questions/${question.id}`}><h3>{question.title}</h3></Link></div>
+        <div className='question-title'><Link className='question-link' to={`/questions/${question.id}`} state={{user: question.user}} ><h3>{question.title}</h3></Link></div>
         <div className='right-datab'><span className='blue-name'>{username}</span> perguntou à {time}</div>
       </div>
     </div>

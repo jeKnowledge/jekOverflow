@@ -5,7 +5,7 @@ import pbutton from './../../assets/img/pbutton.png'
 import Button from 'react-bootstrap/Button'
 import './MakeNewAnswer.css'
 
-const MakeNewAnswer = () => {
+const MakeNewAnswer = (props) => {
     let { id } = useParams()
     const [body, setBody] = useState('');
 
@@ -20,7 +20,8 @@ const MakeNewAnswer = () => {
           'body': body,
           'question': Number(id),
           'created': new Date(),
-          'updated': new Date()
+          'updated': new Date(),
+          'user': props.user
           },
           {
             headers: {

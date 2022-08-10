@@ -1,6 +1,6 @@
 .sb_container{
     width: 88%;
-    border-radius: 5px;
+    border-radius: 56px;
     border:none;
     border:1px rgb(22, 144, 195) solid;
     background-color: white;
@@ -16,7 +16,7 @@
 }
 .sb_container > input{
     width: 100%;
-    border-radius: 5px;
+    border-radius: 56px;
     border:none;
     outline: none;
     height: 38px

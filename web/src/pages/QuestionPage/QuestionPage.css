@@ -41,6 +41,7 @@
 }
 .qp-body {
     display: flex;
+    margin-top: 2%;
 }
 .qp-body-right {
     margin-left: 2%;
@@ -57,5 +58,37 @@
     font-size: 36px;
     font-weight: 600;
     line-height: 46.69px;
+    color: #AEADAA;
+}
+.qp-user {
+    width: 17%;
+    display: flex;
+    margin-right: 0;
+    margin-left: auto;
+}
+.qp-userpic {
+    width: 30%;
+    border-radius: 50%;
+}
+.qp-username {
+    margin-right: 0;
+    margin-left: auto;
+    color: #1690C3;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+}
+.qp-answers-count {
+    margin-left: 2%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
     color: #3E3C39;
+}
+.answers-list {
+    margin-left: 2%;
+}
+.qp-mna {
+    margin-left: 2%;
 }

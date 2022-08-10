@@ -27,6 +27,10 @@
     margin-left: 1%;
     display: flex;
 }
+.tbc-right {
+    display: grid;
+    row-gap: 1%;
+}
 .left-bottom-content {
     width: 35%;
 }

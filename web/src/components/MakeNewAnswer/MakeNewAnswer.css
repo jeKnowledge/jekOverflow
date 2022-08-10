@@ -9,11 +9,20 @@
     color: #3E3C39;
 }
 .mna-body-post {
-    width: 100%;
-    height: 150px;
+    width: 96%;
+    height: 238px;
     margin-top: 1%;
     border: 1px solid rgb(22, 144, 195);
     border-radius: 8px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 8px 16px;
+    gap: 10px;
+
+    margin-right: 0;
+    margin-left: auto;
 }
 .mna-send-button {
     margin-top: 1%;

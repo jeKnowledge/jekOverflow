@@ -1,8 +1,9 @@
-.mq-top {
-    text-align: center;
-}
 .mq-bottom {
-    margin-left: 8%;
+    display: flex;
+}
+.mq-bottoml {
+    margin-left: 2%;
+    width: 100%;
 }
 .margin-all {
     margin-left: 2%;
@@ -17,9 +18,7 @@
 .mq-box-container {
     border-radius: 8px;
     border: 1px solid #AEADAA;
-    margin-top: 2%;
-    height: 70%;
-    width: 79%;
+    width: 84%;
 }
 .mqbc-title-body-tag {
     margin-top: 2%;

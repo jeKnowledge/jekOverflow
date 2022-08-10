@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
@@ -7,12 +7,17 @@ import Answer from '../../components/Answers/Answer'
 import axios from 'axios'
 import arrowup from './../../assets/img/arrowup.png'
 import arrowdown from './../../assets/img/arrowdown.png'
-import qbutton from './../../assets/img/qbutton.png'
 import './QuestionPage.css'
 import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
 
 const QuestionPage = () => {
+    const location = useLocation()
+    const { user } = location.state
     let { id } = useParams()
+    let [usertoken, setUsertoken] = useState('');
+    let [qUser, setqUser] = useState(null);
+    let [username, setUsername] = useState('');
+    let [userpic, setUserPic] = useState('');
     let [question, setQuestion] = useState(null);
     let [answers, setAnswers] = useState([]);
 
@@ -71,6 +76,30 @@ const QuestionPage = () => {
       viewUpdate()
     },[id])
     
+    useEffect(() => {
+      if(question) setUsertoken(question.user)
+    }, [question])
+
+    useEffect(() => {
+      const getqUser = () => {
+        const usersAPI = `http://127.0.0.1:8000/api/users/${usertoken}/`
+        const getUsers = axios.get(usersAPI)
+        axios.all([getUsers]).then(
+          axios.spread((...allData) => {
+            setqUser(allData[0].data)
+          })
+        )
+      }
+      
+      if(usertoken) getqUser()
+    }, [usertoken])
+
+    useEffect(() => {
+      if(qUser) {
+        setUsername(qUser.username)
+        setUserPic(qUser.image)
+      }
+    }, [qUser])
 
     return (
     <div className='questionpage'>
@@ -80,7 +109,6 @@ const QuestionPage = () => {
             <div className='qp-bottom-content'>
                 <div className='qp-bottom-content-top'>
                     <div className='qp-title'><p>{question?.title}</p></div>
-                    <div className='qp-bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} href="/make-question/"><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='qp-body'>
                     <div className='qp-body-left'>
@@ -90,6 +118,11 @@ const QuestionPage = () => {
                     </div>
                     <div className='qp-body-right'><p>{question?.body}</p></div>
                 </div>
+                <div className='qp-user'>
+                  <img className='qp-userpic' src={userpic} alt='userpic' />
+                  <p className='qp-username'>{username}</p>
+                </div>
+                <div className='qp-answers-count'>{question?.n_answers} respostas</div>
                 <div className='answers-list'>
                     {answers.map((answer, index) => (
                         answer.question === Number(id)
@@ -97,7 +130,7 @@ const QuestionPage = () => {
                         : null
                     ))}
                 </div>
-                <div><MakeNewAnswer/></div>
+                <div className='qp-mna' ><MakeNewAnswer user={user}/></div>
             </div>
         </div>
     </div>

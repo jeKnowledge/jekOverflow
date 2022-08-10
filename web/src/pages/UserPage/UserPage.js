@@ -90,7 +90,7 @@ const UserPage = () => {
                 
               </div>
               <div className="flex-box">
-                <div className="tbc-title1">Top Tags</div>
+                <div className="tbc-title1">Top Publicações</div>
                 <Button className="sa-button" variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}}><img src={sa_button} alt="sa-button"/></Button>
               </div>
               <div className="tbc-box2">
