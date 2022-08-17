@@ -4,23 +4,64 @@ import axios from 'axios'
 import Question from '../../components/Questions/Question'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
-    let [questions, setQuestions] = useState([])
-    let [user, setUser] = useState(null)
-    const navigate = useNavigate()
+    const [questions, setQuestions] = useState([]);
+    const [sorted, setSorted] = useState("");
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        getQuestions()
-        getUser()
+        getQuestions();
+        getUser();
     }, [])
     
-    const toMakeQuestion = () => {
-        navigate('/make-question/', {state: user.id_token})
+    const sortByView = () => {
+        setSorted("view");
+        const questionsCopy = [...questions];
+        questionsCopy.sort((questionA, questionB) => {
+            return questionB.n_views - questionA.n_views;
+        });
+        setQuestions(questionsCopy);
+    }
+
+    const sortByVote = () => {
+        setSorted("vote");
+        const questionsCopy = [...questions];
+        questionsCopy.sort((questionA, questionB) => {
+            return questionB.vote - questionA.vote;
+        });
+        setQuestions(questionsCopy);
+    }
+
+    const sortByWeek = () => {
+        setSorted("week");
+        const questionsCopy = [...questions].filter(question=>{
+            const date1 = new Date(question.created);
+            const date = new Date();
+            const diff = date.getTime() - date1.getTime();
+
+            const time = Math.floor(diff / 1000 / 60 / 60);
+            return (time < 168);
+        });
+        setQuestions(questionsCopy);
+    }
+
+    const sortByMonth = () => {
+        setSorted("month");
+        const questionsCopy = [...questions].filter(question=>{
+            const date1 = new Date(question.created);
+            const date = new Date();
+            const diff = date.getTime() - date1.getTime();
+
+            const time = Math.floor(diff / 1000 / 60 / 60);
+            return (time < 730);
+        });
+        setQuestions(questionsCopy);
     }
 
     const getQuestions = () => {
@@ -30,7 +71,13 @@ const HomePage = () => {
         axios.all([getQuestions]).then(
           axios.spread((...allData) => {
             const allDataQuestions = allData[0].data
-    
+            
+            allDataQuestions.sort((questionA, questionB) => {
+                const date1 = new Date(questionA.created)
+                const date2 = new Date(questionB.created)
+                return date2 - date1;
+            });
+
             setQuestions(allDataQuestions)
           })
         )
@@ -60,17 +107,15 @@ const HomePage = () => {
             <Sidebar />
             <div className='bottom-content'>
                 <div className='bottom-content-top'>
-                    <div className='bct1'><h1 className='title'>Perguntas Frequentes</h1></div>
-                    <div className='bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{toMakeQuestion()}}><img src={qbutton} alt="qbutton"/></Button></div>
+                    <div className='bct1'><h1 className='title'>Perguntas Populares</h1></div>
+                    <div className='bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/make-question/', {state: user.id_token})}}><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='bottom-content-mid'>
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-primary" size="sm">Interessante</button>
-                        <button type="button" className="btn btn-primary" size="sm">Com Recompensa</button>
-                        <button type="button" className="btn btn-primary" size="sm">Hot</button>
-                        <button type="button" className="btn btn-primary" size="sm">Semana</button>
-                        <button type="button" className="btn btn-primary" size="sm">Mês</button>
-                    </div>
+                    <button onClick={sortByView} type="button" className="btn btn-primary" size="sm">Interessante</button>
+                    <button type="button" className="btn btn-primary" size="sm">Com Recompensa</button>
+                    <button onClick={sortByVote} type="button" className="btn btn-primary" size="sm">Hot</button>
+                    <button onClick={sortByWeek} type="button" className="btn btn-primary" size="sm">Semana</button>
+                    <button onClick={sortByMonth} type="button" className="btn btn-primary" size="sm">Mês</button>
                 </div>
                 <div className='content-body'>
                     <div className='questions-list'>

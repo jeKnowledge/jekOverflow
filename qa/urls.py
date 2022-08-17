@@ -17,8 +17,8 @@ urlpatterns = [
     path('answers/<int:id>/', viewsets.answer),
     path('answers/<int:id>/vote-up/', viewsets.answer_voteUp),
     path('answers/<int:id>/vote-down/', viewsets.answer_voteDown),
-    path('comments/', viewsets.answer_list),
-    path('comments/<int:id>/', viewsets.answer),
+    path('comments/', viewsets.comment_list),
+    path('comments/<int:id>/', viewsets.comment),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

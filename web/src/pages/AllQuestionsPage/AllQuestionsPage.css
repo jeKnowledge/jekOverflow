@@ -19,8 +19,8 @@
     margin-right: 0;
 }
 .aqp-bottom-content-mid {
-    margin-left: 52.4%;
-    margin-right: auto;
+    display: block;
+    text-align: right;
     margin-top: 4%;
     margin-bottom: 3%;
 }

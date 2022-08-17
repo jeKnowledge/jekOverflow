@@ -16,8 +16,8 @@
     margin-right: 0px;
 }
 .bottom-content-mid {
-    margin-left: 56.5%;
-    margin-right: auto;
+    display: block;
+    text-align: right;
     margin-top: 4%;
     margin-bottom: 3%;
 }

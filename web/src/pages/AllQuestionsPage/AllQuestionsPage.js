@@ -9,6 +9,26 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllQuestionsPage = () => {
     let [questions, setQuestions] = useState([])
+    const [sorted, setSorted] = useState("");
+
+    const sortByTime = () => {
+      setSorted("time");
+      const questionsCopy = [...questions];
+      questionsCopy.sort((questionA, questionB) => {
+        const date1 = new Date(questionA.created)
+        const date2 = new Date(questionB.created)
+        return date2 - date1;
+      });
+      setQuestions(questionsCopy);
+    }
+
+    const sortByAnswers = () => {
+      setSorted("answers");
+      const questionsCopy = [...questions].filter(question => {
+        return (question.n_answers === 0);
+      });
+      setQuestions(questionsCopy);
+    }
 
     useEffect(() => {
         getQuestions()
@@ -31,13 +51,10 @@ const AllQuestionsPage = () => {
                     <div className='aqp-bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} href="/make-question/"><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='aqp-bottom-content-mid'>
-                    <div className="btn-group">
-                        <button type="button" className="btn btn-primary" size="sm">Recentes</button>
-                        <button type="button" className="btn btn-primary" size="sm">Com Recompensa</button>
-                        <button type="button" className="btn btn-primary" size="sm">Ativas</button>
-                        <button type="button" className="btn btn-primary" size="sm">Sem Resposta</button>
-                        <button type="button" className="btn btn-primary" size="sm">Mais</button>
-                    </div>
+                    <button type="button" className="btn btn-primary" size="sm" onClick={sortByTime}>Recentes</button>
+                    <button type="button" className="btn btn-primary" size="sm">Com Recompensa</button>
+                    <button type="button" className="btn btn-primary" size="sm">Ativas</button>
+                    <button type="button" className="btn btn-primary" size="sm" onClick={sortByAnswers}>Sem Resposta</button>
                 </div>
                 <div className='aqp-content-body'>
                     <div className='aqp-questions-list'>

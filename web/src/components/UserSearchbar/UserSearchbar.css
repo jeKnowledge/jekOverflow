@@ -1,7 +1,7 @@
 .usb_container{
-    width: 40%;
+    width: 30%;
     margin-left: 4%;
-    border-radius: 8px;
+    border-radius: 52px;
     border:none;
     border:1px #1690C3 solid;
     height: 40px;
@@ -9,14 +9,14 @@
 }
 .usb_container img {
     height: 16px;
-    margin-top: 3%;
+    margin-top: 4%;
     margin-left: 3%;
 }
 .usb_container > input{
     width: 95%;
     height: 100%;
     display: flex;
-    border-radius: 8px;
+    border-radius: 52px;
     border: none;
     outline: none;
 

@@ -1,4 +1,14 @@
+@font-face {
+    font-family: 'suisseINTL';
+    src: url(./../fonts/SuisseIntlCond-Regular-WebS.ttf);
+}
+
+@font-face {
+    font-family: 'suisseREG';
+    src: url(./../fonts/SuisseSign-Regular-WebS.ttf);
+}
+
 *{
     margin: 0;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'suisseREG';
 }

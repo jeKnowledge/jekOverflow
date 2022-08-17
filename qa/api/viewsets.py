@@ -259,11 +259,11 @@ def answer_list(request, format=None):
         serializer = AnswerSerializer(data=request.data)
         request.data['vote']=0
 
-        # verifies if the serialized data is valid and, if yes, save it
-        if serializer.is_valid() and request.data['vote']==0:
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # verifies if the serialized data is valid and, if yes, save it
+    if serializer.is_valid() and request.data['vote']==0:
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -309,9 +309,11 @@ def answer_voteUp(request, id, format=None):
     
     # gets the current number of votes, adds one and passes it as request's voting field
     request.data['vote'] = answer.vote + 1
-    request.data['title'] = answer.title
+    request.data['user'] = answer.user.id_token
     request.data['body'] = answer.body
-    request.data['user'] = question.user.id_token
+    request.data['question'] = answer.question.id
+    request.data['created'] = answer.created
+    request.data['updated'] = answer.updated
     
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
@@ -335,9 +337,11 @@ def answer_voteDown(request, id, format=None):
     
     # gets the current number of votes, subtracts one and passes it as request's voting field
     request.data['vote'] = answer.vote - 1
-    request.data['title'] = answer.title
+    request.data['user'] = answer.user.id_token
     request.data['body'] = answer.body
-    request.data['user'] = question.user.id_token
+    request.data['question'] = answer.question.id
+    request.data['created'] = answer.created
+    request.data['updated'] = answer.updated
     
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
@@ -352,15 +356,21 @@ def answer_voteDown(request, id, format=None):
 @api_view(['GET', 'POST'])
 def comment_list(request, format=None):
     if request.method == 'GET':
+        # get all the comments on the data base and serialize the data to return
         comments = Comment.objects.all()
-        serializer = Comment(comments, many=True)
+        serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
+         # create a new comment and serialize it
         serializer = CommentSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # verifies if the serialized data is valid and, if yes, save it
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def comment(request, id, format=None):

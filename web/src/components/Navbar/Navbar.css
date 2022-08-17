@@ -8,8 +8,8 @@
 
 .nav_container {
   width: 100%;
-  margin-left: 6.5%;
-  margin-right: 163px;
+  margin-left: 7.5%;
+  margin-right: 7.5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -23,20 +23,28 @@
   display: flex;
 }
 .nav_brand, .nav_brand:hover {
+  font-family: 'suisseINTL';
   text-decoration: none;
   color: white;
-  font-weight: bold;
-  font-size: 25px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 41px;
 }
 .nav_link, .nav_link:hover {
+  font-family: 'suisseINTL';
   color: white;
   text-decoration: none;
   list-style: none;
-  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 31px;
 }
 .nav_container_right {
   display: flex;
-  width: 15%;
+  width: auto;
+  margin-left: 2%;
 }
 .nav_item {
   margin-left: 5%;

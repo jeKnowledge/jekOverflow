@@ -56,42 +56,11 @@ const UserPage = () => {
             </div>
           </div>
           <div className="bottom-bottom-content">
-            <div className="left-bottom-content">
-              <div className="tbc-title1">Estatísticas</div>
-              <div className="tbc-box1">
-                <div className="tbc-box1-content">
-                  <div>
-                    <div className="tbc-title1">00</div>
-                    <div className="tbc-title2">Reputação</div>
-                  </div>
-                  <div>
-                    <div className="tbc-title1">00</div>
-                    <div className="tbc-title2">Pessoas ajudadas</div>
-                  </div>
-                  <div>
-                    <div className="tbc-title1">00</div>
-                    <div className="tbc-title2">Respostas</div>
-                  </div>
-                  <div>
-                    <div className="tbc-title1">00</div>
-                    <div className="tbc-title2">Perguntas</div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="right-bottom-content">
               <div className="tbc-title1">Sobre</div>
               <div className="tbc-detail">{userAbout}</div>
               <div className="flex-box">
-                <div className="tbc-title1">Top Tags</div>
-                <Button className="sa-button" variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}}><img src={sa_button} alt="sa-button"/></Button>
-              </div>
-              <div className="tbc-box2">
-                
-              </div>
-              <div className="flex-box">
                 <div className="tbc-title1">Top Publicações</div>
-                <Button className="sa-button" variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}}><img src={sa_button} alt="sa-button"/></Button>
               </div>
               <div className="tbc-box2">
 
