@@ -11,18 +11,12 @@
     display: flex;
 }
 .aqp-bottom-content {
-    width: 71.5%;
+    width: 74%;
 }
 .aqp-bct2 {
     margin-top: 3%;
     margin-left: auto;
     margin-right: 0;
-}
-.aqp-bottom-content-mid {
-    display: block;
-    text-align: right;
-    margin-top: 4%;
-    margin-bottom: 3%;
 }
 .aqp-title {
     margin-left: 20%;

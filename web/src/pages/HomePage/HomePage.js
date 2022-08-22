@@ -6,6 +6,23 @@ import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
+
+import homeN from './../../assets/img/homeN.png'
+import homeP from './../../assets/img/homeP.png'
+import pergN from './../../assets/img/pergN.png'
+import pergP from './../../assets/img/pergP.png'
+
+import hotN from './../../assets/img/hotN.png'
+//import hotP from './../../assets/img/hotP.png'
+//import interesN from './../../assets/img/interesN.png'
+import interesP from './../../assets/img/interesP.png'
+import mesN from './../../assets/img/mesN.png'
+//import mesP from './../../assets/img/mesP.png'
+import recompN from './../../assets/img/recompN.png'
+//import recompP from './../../assets/img/recompP.png'
+import semaN from './../../assets/img/semaN.png'
+//import semaP from './../../assets/img/semaP.png'
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -104,18 +121,33 @@ const HomePage = () => {
     <div className='homepage'>
         <div className='top'> <Navbar /> </div>
         <div className='bottom'>
-            <Sidebar />
+            <Sidebar page={'home'}/>
             <div className='bottom-content'>
                 <div className='bottom-content-top'>
                     <div className='bct1'><h1 className='title'>Perguntas Populares</h1></div>
                     <div className='bct2'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/make-question/', {state: user.id_token})}}><img src={qbutton} alt="qbutton"/></Button></div>
                 </div>
                 <div className='bottom-content-mid'>
-                    <button onClick={sortByView} type="button" className="btn btn-primary" size="sm">Interessante</button>
-                    <button type="button" className="btn btn-primary" size="sm">Com Recompensa</button>
-                    <button onClick={sortByVote} type="button" className="btn btn-primary" size="sm">Hot</button>
-                    <button onClick={sortByWeek} type="button" className="btn btn-primary" size="sm">Semana</button>
-                    <button onClick={sortByMonth} type="button" className="btn btn-primary" size="sm">Mês</button>
+                    {sorted === 'view' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByView}><img src={interesP} alt="interesP"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByView}><img src={interesP} alt="interesP"/></Button></div>
+                    }
+                    {sorted === '' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div>    
+                    }
+                    {sorted === 'vote' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByVote}><img src={hotN} alt="hotN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByVote}><img src={hotN} alt="hotN"/></Button></div>
+                    }
+                    {sorted === 'week' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByWeek}><img src={semaN} alt="semaN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByWeek}><img src={semaN} alt="semaN"/></Button></div>
+                    }
+                    {sorted === 'month' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByMonth}><img src={mesN} alt="mesN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByMonth}><img src={mesN} alt="mesN"/></Button></div>
+                    }
                 </div>
                 <div className='content-body'>
                     <div className='questions-list'>
@@ -127,7 +159,7 @@ const HomePage = () => {
             </div>
         </div>
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

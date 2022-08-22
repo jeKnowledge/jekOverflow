@@ -23,7 +23,7 @@ const AllUsersPage = () => {
   <div className='all-questions-page'>
       <div className='aqp-top'> <Navbar /> </div>
       <div className='aqp-bottom'>
-          <Sidebar />
+          <Sidebar page={'users'}/>
           <div className='aqp-bottom-content'>
               <div className='aqp-bottom-content-top'>
                   <div className='aqp-bct1'><h1 className='aqp-title'>Utilizadores</h1></div>
