@@ -1,8 +1,19 @@
+.aup-content-body{
+    margin-top: 3%;
+}
 .aup-cb-right {
     display: grid;
     grid-template-columns: auto auto auto;
     column-gap: 12%;
     row-gap: 12%;
     margin-left: 12%;
-    margin-top: 5%;
+    margin-top: 4%;
+}
+.aup-cb-left {
+    display: flex;
+}
+.aup-filters {
+    display: flex;
+    margin-right: 0;
+    margin-left: auto;
 }

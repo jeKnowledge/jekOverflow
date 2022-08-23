@@ -7,11 +7,6 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
 
-import homeN from './../../assets/img/homeN.png'
-import homeP from './../../assets/img/homeP.png'
-import pergN from './../../assets/img/pergN.png'
-import pergP from './../../assets/img/pergP.png'
-
 import hotN from './../../assets/img/hotN.png'
 //import hotP from './../../assets/img/hotP.png'
 //import interesN from './../../assets/img/interesN.png'

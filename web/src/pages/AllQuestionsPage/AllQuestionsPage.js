@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './AllQuestionsPage.css'
+import axios from 'axios'
 import Question from '../../components/Questions/Question'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
 
 import ativoN from './../../assets/img/ativoN.png'
@@ -19,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllQuestionsPage = () => {
     let [questions, setQuestions] = useState([])
+    let [result, setResult] = useState(null)
     const [sorted, setSorted] = useState("");
 
     const sortByTime = () => {
@@ -39,6 +41,25 @@ const AllQuestionsPage = () => {
       });
       setQuestions(questionsCopy);
     }
+
+    const sortByActives = () => {
+        setSorted("actives");
+        const questionsCopy = [...questions].filter(question => {
+            setResult(false)
+            const usersAPI = `http://127.0.0.1:8000/api/users/${question.user}/`
+            const getUsers = axios.get(usersAPI)
+            axios.all([getUsers]).then(axios.spread((...allData) => {
+                if (allData[0].data.is_active) {
+                    console.log('a')
+                    setResult(true)
+                    console.log(result)
+                }
+            }))
+            console.log(result)
+            return result
+        });
+        setQuestions(questionsCopy);
+      }
 
     useEffect(() => {
         getQuestions()
@@ -66,14 +87,14 @@ const AllQuestionsPage = () => {
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByTime}><img src={recentP} alt="recentP"/></Button></div>
                     }
                     {sorted === '' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div>    
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompN} alt="recompN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompN} alt="recompN"/></Button></div>    
                     }
-                    {sorted === 'vote' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={ativoN} alt="ativoN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={ativoN} alt="ativoN"/></Button></div>
+                    {sorted === 'actives' ?
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoN} alt="ativoN"/></Button></div> :
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoN} alt="ativoN"/></Button></div>
                     }
-                    {sorted === 'week' ?
+                    {sorted === 'answers' ?
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByAnswers}><img src={srespN} alt="srespN"/></Button></div> :
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByAnswers}><img src={srespN} alt="srespN"/></Button></div>
                     }
