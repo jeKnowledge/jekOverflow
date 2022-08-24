@@ -14,6 +14,9 @@ class NewUser(models.Model):
     about = models.TextField(_('about'), max_length=500, default='About the User')
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
+    reputation = models.IntegerField(default=0)
+    votes = models.IntegerField(default=0)
+    edits = models.IntegerField(default=0)
 
     def __str__(self):
         return self.username
@@ -28,6 +31,7 @@ class Question(models.Model):
     n_answers = models.IntegerField(default=0)
     n_views = models.IntegerField(default=0)
     time = models.IntegerField(default=0)
+    bountied = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

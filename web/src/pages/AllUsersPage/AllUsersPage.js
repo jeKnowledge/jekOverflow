@@ -33,6 +33,30 @@ const AllUsersPage = () => {
       setUsers(data)
   }
 
+  const sortByReputation = () => {
+    setSorted("reput");
+    const usersCopy = [...users].sort((userA, userB)=>{
+        return userB.reputation - userA.reputation
+    });
+    setUsers(usersCopy);
+  }
+
+  const sortByVoter = () => {
+    setSorted("voter");
+    const usersCopy = [...users].sort((userA, userB)=>{
+        return userB.votes - userA.votes
+    });
+    setUsers(usersCopy);
+  }
+
+  const sortByEdits = () => {
+    setSorted("edit");
+    const usersCopy = [...users].sort((userA, userB)=>{
+        return userB.edits - userA.edits
+    });
+    setUsers(usersCopy);
+  }
+
   const sortByNewUser = () => {
     setSorted("nuser");
     const usersCopy = [...users].filter(user=>{
@@ -78,20 +102,20 @@ const AllUsersPage = () => {
 
                     <div className='aup-filters'>
                       {sorted === 'reput' ?
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={reputP} alt="reputP"/></Button></div> :
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={reputP} alt="reputP"/></Button></div>
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByReputation}><img src={reputP} alt="reputP"/></Button></div> :
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByReputation}><img src={reputP} alt="reputP"/></Button></div>
                       }
                       {sorted === 'nuser' ?
                           <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByNewUser}><img src={nuserN} alt="nuserN"/></Button></div> :
                           <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByNewUser}><img src={nuserN} alt="nuserN"/></Button></div>    
                       }
                       {sorted === 'voter' ?
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={voterN} alt="voterN"/></Button></div> :
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={voterN} alt="voterN"/></Button></div>
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByVoter}><img src={voterN} alt="voterN"/></Button></div> :
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByVoter}><img src={voterN} alt="voterN"/></Button></div>
                       }
                       {sorted === 'edit' ?
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={editN} alt="editN"/></Button></div> :
-                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={editN} alt="editN"/></Button></div>
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByEdits}><img src={editN} alt="editN"/></Button></div> :
+                          <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByEdits}><img src={editN} alt="editN"/></Button></div>
                       }
                       {sorted === 'moder' ?
                           <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByModer}><img src={moderN} alt="moderN"/></Button></div> :

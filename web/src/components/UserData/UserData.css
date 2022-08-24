@@ -1,0 +1,44 @@
+.ud-container {
+    width: 78%;
+    padding: 16px;
+    margin-top: 1%;
+}
+.ud-container, .ud-sidedataL {
+    display: flex;
+}
+.ud-sidedata, .ud-sidedataR {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    padding-top: 1%;
+}
+.ud-sidedata, .ud-maindata {
+    margin-right: 9%;
+}
+.ud-sidedata {
+    color: #FFFFFF;
+    width: auto;
+    border-radius: 27px;
+    background: #7CCCED;
+    text-align: center;
+    padding: 2.3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+.ud-sidedataL {
+    width: 90%;
+}
+.ud-sidedataR {
+    margin-right: 0;
+    margin-left: auto;
+    color: #3E3C39;
+}
+.ud-maindata {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 31px;
+    color: #1690C3;
+    width: 100%;
+}

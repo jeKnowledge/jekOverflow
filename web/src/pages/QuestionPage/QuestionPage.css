@@ -68,15 +68,17 @@
 }
 .qp-userpic {
     width: 30%;
+    height: 30%;
     border-radius: 50%;
 }
-.qp-username {
+.qp-username, .qp-username:hover {
     margin-right: 0;
     margin-left: auto;
     color: #1690C3;
     font-style: normal;
     font-weight: 600;
     line-height: 18px;
+    text-decoration: none;
 }
 .qp-answers-count {
     margin-left: 2%;

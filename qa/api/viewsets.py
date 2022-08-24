@@ -142,6 +142,7 @@ def question_voteUp(request, id, format=None):
         request.data['user'] = question.user.id_token
         request.data['created'] = question.created
         request.data['updated'] = question.updated
+        request.data['bountied'] = question.bountied
         
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
@@ -172,6 +173,7 @@ def question_voteDown(request, id, format=None):
         request.data['user'] = question.user.id_token
         request.data['created'] = question.created
         request.data['updated'] = question.updated
+        request.data['bountied'] = question.bountied
 
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
@@ -202,6 +204,7 @@ def question_viewUPDT(request, id, format=None):
         request.data['user'] = question.user.id_token
         request.data['created'] = question.created
         request.data['updated'] = question.updated
+        request.data['bountied'] = question.bountied
         
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
@@ -232,6 +235,7 @@ def question_nanswersUPDT(request, id, format=None):
         request.data['user'] = question.user.id_token
         request.data['created'] = question.created
         request.data['updated'] = question.updated
+        request.data['bountied'] = question.bountied
         
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)

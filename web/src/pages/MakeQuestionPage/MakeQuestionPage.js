@@ -37,7 +37,7 @@ const MakeQuestionPage = () => {
     <div className='make-question'>
         <div className='mq-top'> <Navbar /> </div>
         <div className='mq-bottom'>
-          <Sidebar />
+          <Sidebar page={'questions'}/>
           <div className='mq-bottoml'> 
               <div className='mq-title'><h1>Faz uma pergunta</h1></div>
               <div className='mq-box-container'>

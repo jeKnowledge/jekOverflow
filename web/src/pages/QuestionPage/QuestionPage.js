@@ -18,6 +18,8 @@ const QuestionPage = () => {
     let [qUser, setqUser] = useState(null);
     let [username, setUsername] = useState('');
     let [userpic, setUserPic] = useState('');
+    let [userPoints, setUserPoints] = useState('')
+    let [userPage, setUserPage] = useState('')
     let [question, setQuestion] = useState(null);
     let [answers, setAnswers] = useState([]);
 
@@ -98,6 +100,8 @@ const QuestionPage = () => {
       if(qUser) {
         setUsername(qUser.username)
         setUserPic(qUser.image)
+        setUserPoints(qUser.reputation)
+        setUserPage(`/users/${qUser.id_token}`)
       }
     }, [qUser])
 
@@ -105,7 +109,7 @@ const QuestionPage = () => {
     <div className='questionpage'>
         <div className='qp-top'><Navbar /></div>
         <div className='qp-bottom'>
-            <Sidebar />
+            <Sidebar page={'questions'}/>
             <div className='qp-bottom-content'>
                 <div className='qp-bottom-content-top'>
                     <div className='qp-title'><p>{question?.title}</p></div>
@@ -120,7 +124,10 @@ const QuestionPage = () => {
                 </div>
                 <div className='qp-user'>
                   <img className='qp-userpic' src={userpic} alt='userpic' />
-                  <p className='qp-username'>{username}</p>
+                  <div>
+                    <a className='qp-username' href={userPage}>{username}</a>
+                    <p>{userPoints}</p>
+                  </div>
                 </div>
                 <div className='qp-answers-count'>{question?.n_answers} respostas</div>
                 <div className='answers-list'>

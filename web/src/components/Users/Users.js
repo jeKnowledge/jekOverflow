@@ -9,7 +9,7 @@ const Users = ({user}) => {
         <div className='user-content'>
             <div><Link className='user-name' to={`/users/${user.id_token}`}>{user.username}</Link></div>
             <div className='user-detail'>-locale-</div>
-            <div className='user-detail'>30</div>
+            <div className='user-detail'>{user.reputation}</div>
             <div className='user-detail'>tags</div>
         </div>
     </div>

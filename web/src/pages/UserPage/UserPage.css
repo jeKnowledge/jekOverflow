@@ -22,21 +22,27 @@
     line-height: 21px;
     color: #3E3C39;
 }
+.tbc-detail2 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #3E3C39;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
 .bottom-bottom-content {
     margin-top: 3%;
-    margin-left: 1%;
+    margin-left: 3%;
     display: flex;
 }
 .tbc-right {
     display: grid;
-    row-gap: 1%;
-}
-.left-bottom-content {
-    width: 35%;
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 .right-bottom-content {
     margin-left: 1%;
-    width: 65%;
+    width: 100%;
     height: auto;
 }
 .tbc-box1, .tbc-box2{
@@ -67,4 +73,9 @@
     height: 28px;
     margin-right: none;
     margin-left: auto;
+}
+.tbc-filters {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2%;
 }
