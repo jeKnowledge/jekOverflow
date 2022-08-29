@@ -40,13 +40,13 @@ const MakeNewAnswer = (props) => {
             <div className='mna-title'>A tua resposta</div>
             <div className='mna-body'>
                 <form>
-                <textarea 
-                className='mna-body-post' 
-                type="text" 
-                required
-                value={body}
-                onChange={(event) => setBody(event.target.value)} 
-                />
+                  <textarea 
+                  className='mna-body-post' 
+                  type="text" 
+                  required
+                  value={body}
+                  onChange={(event) => setBody(event.target.value)} 
+                  />
                 </form>
             </div>
             <div className='mna-send-button'>

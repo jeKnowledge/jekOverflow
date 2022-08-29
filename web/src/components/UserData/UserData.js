@@ -32,8 +32,8 @@ const UserData = ({data}) => {
                 <div className='ud-sidedata'>{data.vote}</div>
                 <div className='ud-maindata'>
                     {(data.title?
-                        <Link className='question-link' to={`/questions/${data.id}`} state={{user: data.user}} ><div>{data.title.slice(0,33)+'...'}</div></Link> : 
-                        <Link className='question-link' to={`/questions/${data.question}`} state={{user: data.user}} ><div>{data.body.slice(0,33)+'...'}</div></Link>
+                        <Link className='question-link' to={`/questions/${data.id}`} state={{user: data.user}} ><div>{data.title.slice(0,31)+'...'}</div></Link> : 
+                        <Link className='question-link' to={`/questions/${data.question}`} state={{user: data.user}} ><div>{data.body.slice(0,31)+'...'}</div></Link>
                     )}
                 </div>
             </div>

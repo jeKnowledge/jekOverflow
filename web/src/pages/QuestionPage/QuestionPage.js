@@ -133,7 +133,7 @@ const QuestionPage = () => {
                 <div className='answers-list'>
                     {answers.map((answer, index) => (
                         answer.question === Number(id)
-                        ? (<Answer key={index} answer={answer} />)
+                        ? (<Answer key={index} answer={answer} user={user}/>)
                         : null
                     ))}
                 </div>

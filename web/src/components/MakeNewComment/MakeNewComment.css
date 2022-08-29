@@ -1,0 +1,12 @@
+.mnc-body-post {
+    height: 28px;
+    width: 100%;
+    border: none;
+}
+::placeholder{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: #AEADAA;
+}

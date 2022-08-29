@@ -1,0 +1,16 @@
+.comments-container {
+    border: 1px solid;
+    border-color: rgb(174, 173, 170);
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+.comments-body {
+    margin-left: 1%;
+    padding: 1%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: #3E3C39;
+}
