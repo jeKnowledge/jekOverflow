@@ -1,0 +1,4 @@
+
+*.pyc
+qa/migrations/0002_auto_20220831_1436.py
+db.sqlite3
