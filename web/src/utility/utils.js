@@ -8,7 +8,9 @@ export const getUser = (setUser) => {
     axios.all([getUsers]).then(
         axios.spread((...allData) => {
             const allDataUsers = allData[0].data
-            console.log(allDataUsers)
+            console.log("allUsers from DB: ", allDataUsers)
+
+
             allDataUsers.map((user) => (
                 (user.is_active)
                     ? setUser(user)

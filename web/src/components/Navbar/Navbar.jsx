@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import '../Navbar/Navbar.css'
-import axios from 'axios'
 import logo from './../../assets/img/jklogo.png'
 import SearchBar from '../Searchbar/Searchbar'
+import { getUser, logOut } from '../../utility/utils'
+import { IoIosLogOut } from 'react-icons/io'
+import { AuthContext } from '../AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+
 
 const Navbar = (props) => {
-  let [user, setUser] = useState(null)
-  let [username, setUsername] = useState('')
-  let [userImage, setUserImage] = useState(null)
-  let [userPage, setUserPage] = useState('')
+  const [user, setUser] = useState(null)
+  const [username, setUsername] = useState('')
+  const [userImage, setUserImage] = useState(null)
+  const [userPage, setUserPage] = useState('')
+  const authcontext = React.useContext(AuthContext);
 
-  const getUser = () => {
-    const usersAPI = `http://127.0.0.1:8000/api/users/`
+  const navigate = useNavigate()
 
-    const getUsers = axios.get(usersAPI)
-    axios.all([getUsers]).then(
-      axios.spread((...allData) => {
-        const allDataUsers = allData[0].data
-
-        allDataUsers.map((user) => (
-            (user.is_active)
-            ? setUser(user)
-            : null
-        ))
-      })
-    )
-  }
 
   useEffect(() => {
-    getUser()
+    getUser(setUser)
   }, [])
 
   useEffect(() => {
@@ -50,6 +42,17 @@ const Navbar = (props) => {
         <div className='nav_container_right'>
           <img className='nav-avatar-image' src={userImage} alt="userAvatar" />
           <li className='nav_item'><a href={userPage} className="nav_link">{username}</a></li>
+
+          <li className='nav_item'>
+            <IoIosLogOut onClick={() => {
+              //clear local storage
+              localStorage.clear()
+
+              authcontext.dispatch({ type: "LOGOUT" });
+              navigate('/')
+
+            }} className='nav_link' size={30} style={{ marginLeft: 5 }} />
+          </li>
         </div>
       </div>
     </nav>

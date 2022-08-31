@@ -9,7 +9,7 @@ let AuthContext = createContext();
 //O context só dá render da App quando tiver guardado o token no State
 const AuthReducer = (action, state = {}) => {
     const token = localStorage.getItem("Authorization");
-    if (token === null) {
+    if (token === null || token === undefined) {
         return <Login />;
     }
 

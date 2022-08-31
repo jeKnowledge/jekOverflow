@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import login from './../../assets/img/login.png'
 import loginText from './../../assets/img/loginText.png'
 import jklogoB from './../../assets/img/jklogoB.png'
@@ -8,6 +8,7 @@ import axios from 'axios'
 import './LoginPage.css'
 import { fetchData } from '../../utility/utils'
 import { AuthContext } from '../../components/AuthContext'
+
 function Login() {
   const authcontext = React.useContext(AuthContext);
 
@@ -18,11 +19,20 @@ function Login() {
     fetchData(setUsers)
   }, [])
 
+  const logIn = (authToken, userObject) => {
+    localStorage.setItem('Authorization', authToken)
+
+    localStorage.setItem('user', JSON.stringify(userObject))
+
+    authcontext.dispatch({ type: "LOGIN" });
+
+    navigate('/home/')
+  }
+
   function handleCallbackResponse(response) {
     let exists = false
-    let userObject = jwt_decode(response.credential);
-
-    console.log(response)
+    const authToken = response.credential
+    let userObject = jwt_decode(authToken);
 
     if (userObject.email_verified) {
       if ((users.filter((user) => { return user.id_token === userObject.sub })).length !== 0) {
@@ -30,60 +40,54 @@ function Login() {
       }
 
       if (!exists) {
+        console.log(userObject)
         axios.post(`http://127.0.0.1:8000/api/users/`, {
           'id_token': userObject.sub,
           'username': userObject.name,
           'email': userObject.email,
           'image': userObject.picture,
-          'is_active': true
+          'is_active': true,
         },
           {
             headers: {
-              "Authorization": `AUTHORIZATION_KEY`,
               "Content-Type": 'application/json'
             }
           }
         ).then((response) => {
           console.log(response)
+          if (response.statusText === "Created") {
 
-          if (response.statusText === "OK") {
+            logIn(authToken, userObject)
 
-            localStorage.setItem('Authorization', response.data.token)
-            localStorage.setItem('user', JSON.stringify(userObject.sub))
-
-            authcontext.dispatch({ type: "LOGIN" });
-
-            navigate('/home/')
           } else {
-            console.error(response)
+            console.log(response.data)
           }
 
+        }).catch((error) => {
+          console.error(error.response)
         })
       }
       else {
+
         axios.put(`http://127.0.0.1:8000/api/users/${userObject.sub}/`, {
           'id_token': userObject.sub,
           'username': userObject.name,
           'email': userObject.email,
           'image': userObject.picture,
-          'is_active': true
+          'is_active': true,
+
         },
           {
             headers: {
-              "Authorization": `AUTHORIZATION_KEY`,
               "Content-Type": 'application/json'
             }
           }
         ).then((response) => {
           console.log(response)
+
           if (response.statusText === "OK") {
-            localStorage.setItem('Authorization', response.data.token)
+            logIn(authToken, userObject)
 
-            localStorage.setItem('user', JSON.stringify(userObject.sub))
-
-            authcontext.dispatch({ type: "LOGIN" });
-
-            navigate('/home/')
           } else {
             console.error(response)
           }
