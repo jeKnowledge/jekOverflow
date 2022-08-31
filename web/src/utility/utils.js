@@ -32,3 +32,7 @@ export const fetchData = (setUsers) => {
     )
 }
 
+export const getUserFromLocalStorage = () => {
+    return JSON.parse(localStorage.getItem('user'))
+}
+

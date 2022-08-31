@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../Navbar/Navbar.css'
 import logo from './../../assets/img/jklogo.png'
 import SearchBar from '../Searchbar/Searchbar'
-import { getUser, logOut } from '../../utility/utils'
+import { getUser, getUserFromLocalStorage, logOut } from '../../utility/utils'
 import { IoIosLogOut } from 'react-icons/io'
 import { AuthContext } from '../AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -18,16 +18,12 @@ const Navbar = (props) => {
 
   const navigate = useNavigate()
 
-
   useEffect(() => {
-    getUser(setUser)
-  }, [])
-
-  useEffect(() => {
+    const user = getUserFromLocalStorage()
     if (user) {
-      setUsername(user.username.split(' ')[0])
-      setUserImage(user.image)
-      setUserPage(`/users/${user.id_token}`)
+      setUsername(user.given_name)
+      setUserImage(user.picture)
+      setUserPage(`/users/${user.sub}`)
     }
   }, [user])
 
@@ -50,6 +46,7 @@ const Navbar = (props) => {
 
               authcontext.dispatch({ type: "LOGOUT" });
               navigate('/')
+              window.location.reload();
 
             }} className='nav_link' size={30} style={{ marginLeft: 5 }} />
           </li>

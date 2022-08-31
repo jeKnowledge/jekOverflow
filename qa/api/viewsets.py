@@ -3,6 +3,11 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from qa.api.serializers import NewUserSerializer, QuestionSerializer, AnswerSerializer, CommentSerializer
 from qa.models import NewUser, Question, Answer, Comment
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
+CLIENT_ID = "352573950698-j507onfr86l7f57t812mdli2vpngnpdu.apps.googleusercontent.com"
+
 
 
 @api_view(['GET'])
@@ -15,7 +20,9 @@ def get_routes(request, format=None):
     ]
     return Response(routes)
 
-#users
+# users
+
+
 @api_view(['GET', 'POST'])
 def user_list(request, format=None):
     ''' view that gives us the possibility of get a 
@@ -36,6 +43,7 @@ def user_list(request, format=None):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def user(request, token, format=None):
@@ -60,11 +68,12 @@ def user(request, token, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     elif request.method == 'DELETE':
         # delete the question and returns a no content error
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['GET'])
 def user_vote(request, token, format=None):
@@ -74,10 +83,10 @@ def user_vote(request, token, format=None):
     if request.method == 'GET':
         # verifies if the user exists through it's token and return a 404 ERROR if not
         try:
-            user = NewUser.objects.get(pk=token)            
+            user = NewUser.objects.get(pk=token)
         except NewUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, adds one and passes it as request's voting field
         request.data['id_token'] = user.id_token
         request.data['username'] = user.username
@@ -90,7 +99,7 @@ def user_vote(request, token, format=None):
         request.data['reputation'] = user.reputation
         request.data['votes'] = user.votes + 1
         request.data['edits'] = user.edits
-        
+
         # updates the data of an existing user and verifies if it still valid
         serializer = NewUserSerializer(user, data=request.data)
 
@@ -98,6 +107,7 @@ def user_vote(request, token, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def user_edit(request, token, format=None):
@@ -107,10 +117,10 @@ def user_edit(request, token, format=None):
     if request.method == 'GET':
         # verifies if the user exists through it's token and return a 404 ERROR if not
         try:
-            user = NewUser.objects.get(pk=token)            
+            user = NewUser.objects.get(pk=token)
         except NewUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, adds one and passes it as request's voting field
         request.data['id_token'] = user.id_token
         request.data['username'] = user.username
@@ -123,7 +133,7 @@ def user_edit(request, token, format=None):
         request.data['reputation'] = user.reputation
         request.data['votes'] = user.votes
         request.data['edits'] = user.edits + 1
-        
+
         # updates the data of an existing user and verifies if it still valid
         serializer = NewUserSerializer(user, data=request.data)
 
@@ -131,6 +141,7 @@ def user_edit(request, token, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def user_repUP(request, token, format=None):
@@ -140,10 +151,10 @@ def user_repUP(request, token, format=None):
     if request.method == 'GET':
         # verifies if the user exists through it's token and return a 404 ERROR if not
         try:
-            user = NewUser.objects.get(pk=token)            
+            user = NewUser.objects.get(pk=token)
         except NewUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, adds one and passes it as request's voting field
         request.data['id_token'] = user.id_token
         request.data['username'] = user.username
@@ -156,7 +167,7 @@ def user_repUP(request, token, format=None):
         request.data['reputation'] = user.reputation + 10
         request.data['votes'] = user.votes
         request.data['edits'] = user.edits
-        
+
         # updates the data of an existing user and verifies if it still valid
         serializer = NewUserSerializer(user, data=request.data)
 
@@ -164,6 +175,7 @@ def user_repUP(request, token, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def user_repDOWN(request, token, format=None):
@@ -173,10 +185,10 @@ def user_repDOWN(request, token, format=None):
     if request.method == 'GET':
         # verifies if the user exists through it's token and return a 404 ERROR if not
         try:
-            user = NewUser.objects.get(pk=token)            
+            user = NewUser.objects.get(pk=token)
         except NewUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, adds one and passes it as request's voting field
         request.data['id_token'] = user.id_token
         request.data['username'] = user.username
@@ -189,7 +201,7 @@ def user_repDOWN(request, token, format=None):
         request.data['reputation'] = user.reputation - 2
         request.data['votes'] = user.votes
         request.data['edits'] = user.edits
-        
+
         # updates the data of an existing user and verifies if it still valid
         serializer = NewUserSerializer(user, data=request.data)
 
@@ -199,6 +211,8 @@ def user_repDOWN(request, token, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # questions
+
+
 @api_view(['GET', 'POST'])
 def question_list(request, format=None):
     ''' view that gives us the possibility of get a 
@@ -211,15 +225,36 @@ def question_list(request, format=None):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # create a new question and serialize it
-        serializer = QuestionSerializer(data=request.data)
-        request.data['vote']=0
 
-        # verifies if the serialized data is valid and, if yes, save it
-        if serializer.is_valid() and request.data['vote']==0:
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # validate the header Authorization and if it's not valid throw an error
+        if 'Authorization' not in request.headers:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!!111!1111!'})
+        # get the token from the header Authorization
+        token = request.headers['Authorization']
+        # verify if the token is valid and if it's not valid throw an error
+
+        try:
+            idinfo = id_token.verify_oauth2_token(
+                token, requests.Request(), CLIENT_ID)
+            userid = idinfo['sub']
+            if userid:
+                # get the user from userid sub
+                user = NewUser.objects.get(pk=userid)
+
+                request.data['user'] = userid
+
+                # create a new question and serialize it
+                serializer = QuestionSerializer(data=request.data)
+                request.data['vote'] = 0
+
+                # verifies if the serialized data is valid and, if yes, save it
+                if serializer.is_valid() and request.data['vote'] == 0:
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except ValueError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!!111!1111!'})
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -229,7 +264,7 @@ def question(request, id, format=None):
 
     # verifies if the question exists through it's id and return a 404 ERROR if not
     try:
-        question = Question.objects.get(pk=id)            
+        question = Question.objects.get(pk=id)
     except Question.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -245,7 +280,7 @@ def question(request, id, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     elif request.method == 'DELETE':
         # delete the question and returns a no content error
         question.delete()
@@ -260,10 +295,10 @@ def question_voteUp(request, id, format=None):
     if request.method == 'GET':
         # verifies if the question exists through it's id and return a 404 ERROR if not
         try:
-            question = Question.objects.get(pk=id)            
+            question = Question.objects.get(pk=id)
         except Question.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, adds one and passes it as request's voting field
         request.data['vote'] = question.vote + 1
         request.data['title'] = question.title
@@ -274,7 +309,7 @@ def question_voteUp(request, id, format=None):
         request.data['created'] = question.created
         request.data['updated'] = question.updated
         request.data['bountied'] = question.bountied
-        
+
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
 
@@ -282,6 +317,7 @@ def question_voteUp(request, id, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def question_voteDown(request, id, format=None):
@@ -291,10 +327,10 @@ def question_voteDown(request, id, format=None):
     if request.method == 'GET':
         # verifies if the question exists through it's id and return a 404 ERROR if not
         try:
-            question = Question.objects.get(pk=id)            
+            question = Question.objects.get(pk=id)
         except Question.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, subtracts one and passes it as request's voting field
         request.data['vote'] = question.vote - 1
         request.data['title'] = question.title
@@ -314,6 +350,7 @@ def question_voteDown(request, id, format=None):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET'])
 def question_viewUPDT(request, id, format=None):
     '''view that, passed a question by it's id, 
@@ -322,10 +359,10 @@ def question_viewUPDT(request, id, format=None):
     if request.method == 'GET':
         # verifies if the question exists through it's id and return a 404 ERROR if not
         try:
-            question = Question.objects.get(pk=id)            
+            question = Question.objects.get(pk=id)
         except Question.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, subtracts one and passes it as request's voting field
         request.data['n_views'] = question.n_views + 1
         request.data['vote'] = question.vote
@@ -336,7 +373,7 @@ def question_viewUPDT(request, id, format=None):
         request.data['created'] = question.created
         request.data['updated'] = question.updated
         request.data['bountied'] = question.bountied
-        
+
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
 
@@ -344,6 +381,7 @@ def question_viewUPDT(request, id, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def question_nanswersUPDT(request, id, format=None):
@@ -353,10 +391,10 @@ def question_nanswersUPDT(request, id, format=None):
     if request.method == 'GET':
         # verifies if the question exists through it's id and return a 404 ERROR if not
         try:
-            question = Question.objects.get(pk=id)            
+            question = Question.objects.get(pk=id)
         except Question.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
         # gets the current number of votes, subtracts one and passes it as request's voting field
         request.data['n_answers'] = question.n_answers + 1
         request.data['vote'] = question.vote
@@ -367,7 +405,7 @@ def question_nanswersUPDT(request, id, format=None):
         request.data['created'] = question.created
         request.data['updated'] = question.updated
         request.data['bountied'] = question.bountied
-        
+
         # updates the data of an existing question and verifies if it still valid
         serializer = QuestionSerializer(question, data=request.data)
 
@@ -392,10 +430,10 @@ def answer_list(request, format=None):
     elif request.method == 'POST':
         # create a new answers and serialize it
         serializer = AnswerSerializer(data=request.data)
-        request.data['vote']=0
+        request.data['vote'] = 0
 
     # verifies if the serialized data is valid and, if yes, save it
-    if serializer.is_valid() and request.data['vote']==0:
+    if serializer.is_valid() and request.data['vote'] == 0:
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -408,7 +446,7 @@ def answer(request, id, format=None):
 
     # verifies if the answer exists through it's id and return a 404 ERROR if not
     try:
-        answer = Answer.objects.get(pk=id)            
+        answer = Answer.objects.get(pk=id)
     except Answer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -424,7 +462,7 @@ def answer(request, id, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     elif request.method == 'DELETE':
         # delete the answer and returns a no content error
         answer.delete()
@@ -438,10 +476,10 @@ def answer_voteUp(request, id, format=None):
 
     # verifies if the answer exists through it's id and return a 404 ERROR if not
     try:
-        answer = Answer.objects.get(pk=id)            
+        answer = Answer.objects.get(pk=id)
     except Answer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     # gets the current number of votes, adds one and passes it as request's voting field
     request.data['vote'] = answer.vote + 1
     request.data['user'] = answer.user.id_token
@@ -449,7 +487,7 @@ def answer_voteUp(request, id, format=None):
     request.data['question'] = answer.question.id
     request.data['created'] = answer.created
     request.data['updated'] = answer.updated
-    
+
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
 
@@ -466,10 +504,10 @@ def answer_voteDown(request, id, format=None):
 
     # verifies if the answer exists through it's id and return a 404 ERROR if not
     try:
-        answer = Answer.objects.get(pk=id)            
+        answer = Answer.objects.get(pk=id)
     except Answer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
+
     # gets the current number of votes, subtracts one and passes it as request's voting field
     request.data['vote'] = answer.vote - 1
     request.data['user'] = answer.user.id_token
@@ -477,7 +515,7 @@ def answer_voteDown(request, id, format=None):
     request.data['question'] = answer.question.id
     request.data['created'] = answer.created
     request.data['updated'] = answer.updated
-    
+
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
 
@@ -497,23 +535,22 @@ def comment_list(request, format=None):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-         # create a new comment and serialize it
+        # create a new comment and serialize it
         serializer = CommentSerializer(data=request.data)
-    
+
     # verifies if the serialized data is valid and, if yes, save it
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def comment(request, id, format=None):
     try:
-        comment = Comment.objects.get(pk=id)            
+        comment = Comment.objects.get(pk=id)
     except Comment.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-
 
     if request.method == 'GET':
         serializer = CommentSerializer(comment)
@@ -525,7 +562,7 @@ def comment(request, id, format=None):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     elif request.method == 'DELETE':
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
