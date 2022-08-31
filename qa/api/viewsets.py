@@ -66,6 +66,137 @@ def user(request, token, format=None):
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['GET'])
+def user_vote(request, token, format=None):
+    '''view that, passed a user by it's token, 
+        increments one in their vote's count'''
+
+    if request.method == 'GET':
+        # verifies if the user exists through it's token and return a 404 ERROR if not
+        try:
+            user = NewUser.objects.get(pk=token)            
+        except NewUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, adds one and passes it as request's voting field
+        request.data['id_token'] = user.id_token
+        request.data['username'] = user.username
+        request.data['email'] = user.email
+        request.data['image'] = user.image
+        request.data['start_date'] = user.start_date
+        request.data['about'] = user.about
+        request.data['is_staff'] = user.is_staff
+        request.data['is_active'] = user.is_active
+        request.data['reputation'] = user.reputation
+        request.data['votes'] = user.votes + 1
+        request.data['edits'] = user.edits
+        
+        # updates the data of an existing user and verifies if it still valid
+        serializer = NewUserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def user_edit(request, token, format=None):
+    '''view that, passed a user by it's token, 
+        increments one in their edit's count'''
+
+    if request.method == 'GET':
+        # verifies if the user exists through it's token and return a 404 ERROR if not
+        try:
+            user = NewUser.objects.get(pk=token)            
+        except NewUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, adds one and passes it as request's voting field
+        request.data['id_token'] = user.id_token
+        request.data['username'] = user.username
+        request.data['email'] = user.email
+        request.data['image'] = user.image
+        request.data['start_date'] = user.start_date
+        request.data['about'] = user.about
+        request.data['is_staff'] = user.is_staff
+        request.data['is_active'] = user.is_active
+        request.data['reputation'] = user.reputation
+        request.data['votes'] = user.votes
+        request.data['edits'] = user.edits + 1
+        
+        # updates the data of an existing user and verifies if it still valid
+        serializer = NewUserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def user_repUP(request, token, format=None):
+    '''view that, passed a user by it's token, 
+        increments in ten units theirs reputation'''
+
+    if request.method == 'GET':
+        # verifies if the user exists through it's token and return a 404 ERROR if not
+        try:
+            user = NewUser.objects.get(pk=token)            
+        except NewUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, adds one and passes it as request's voting field
+        request.data['id_token'] = user.id_token
+        request.data['username'] = user.username
+        request.data['email'] = user.email
+        request.data['image'] = user.image
+        request.data['start_date'] = user.start_date
+        request.data['about'] = user.about
+        request.data['is_staff'] = user.is_staff
+        request.data['is_active'] = user.is_active
+        request.data['reputation'] = user.reputation + 10
+        request.data['votes'] = user.votes
+        request.data['edits'] = user.edits
+        
+        # updates the data of an existing user and verifies if it still valid
+        serializer = NewUserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def user_repDOWN(request, token, format=None):
+    '''view that, passed a user by it's token, 
+        decrements in two units theirs reputation'''
+
+    if request.method == 'GET':
+        # verifies if the user exists through it's token and return a 404 ERROR if not
+        try:
+            user = NewUser.objects.get(pk=token)            
+        except NewUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        # gets the current number of votes, adds one and passes it as request's voting field
+        request.data['id_token'] = user.id_token
+        request.data['username'] = user.username
+        request.data['email'] = user.email
+        request.data['image'] = user.image
+        request.data['start_date'] = user.start_date
+        request.data['about'] = user.about
+        request.data['is_staff'] = user.is_staff
+        request.data['is_active'] = user.is_active
+        request.data['reputation'] = user.reputation - 2
+        request.data['votes'] = user.votes
+        request.data['edits'] = user.edits
+        
+        # updates the data of an existing user and verifies if it still valid
+        serializer = NewUserSerializer(user, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # questions
 @api_view(['GET', 'POST'])

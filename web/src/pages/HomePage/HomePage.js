@@ -14,23 +14,25 @@ import interesP from './../../assets/img/interesP.png'
 import mesN from './../../assets/img/mesN.png'
 //import mesP from './../../assets/img/mesP.png'
 import recompN from './../../assets/img/recompN.png'
+import recompNH from './../../assets/img/recompNH.png'
 //import recompP from './../../assets/img/recompP.png'
 import semaN from './../../assets/img/semaN.png'
 //import semaP from './../../assets/img/semaP.png'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const HomePage = () => {
     const [questions, setQuestions] = useState([]);
     const [sorted, setSorted] = useState("");
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation()
 
     useEffect(() => {
         getQuestions();
         getUser();
-    }, [])
+    }, [location])
     
     const sortByView = () => {
         setSorted("view");
@@ -112,6 +114,14 @@ const HomePage = () => {
         )
     }
 
+    const funcCons = () => {
+        document.getElementById("hp-img2").src={recompNH}
+    }
+
+    const funcCons2 = () => {
+        document.getElementById("hp-img2").src={recompN}
+    }
+
     return (
     <div className='homepage'>
         <div className='top'> <Navbar /> </div>
@@ -127,9 +137,9 @@ const HomePage = () => {
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByView}><img src={interesP} alt="interesP"/></Button></div> :
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByView}><img src={interesP} alt="interesP"/></Button></div>
                     }
-                    {sorted === '' ?
+                    {sorted === 'recomp' ?
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img src={recompN} alt="recompN"/></Button></div>    
+                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}}><img id="hp-img2" src={recompN} onMouseOver={funcCons} onMouseOut={funcCons2} alt="recompN"/></Button></div>    
                     }
                     {sorted === 'vote' ?
                         <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByVote}><img src={hotN} alt="hotN"/></Button></div> :

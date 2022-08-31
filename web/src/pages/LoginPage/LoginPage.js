@@ -8,23 +8,29 @@ import axios from 'axios'
 import './LoginPage.css'
 
 function Login() {
-  let [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(null);
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchData = () => {
+      const usersAPI = `http://127.0.0.1:8000/api/users/`    
+      const getUsers = axios.get(usersAPI)
+      axios.all([getUsers]).then(
+        axios.spread((...allData) => {
+          const allDataUsers = allData[0].data
+          setUsers(allDataUsers)
+        })
+      )
+    }
+
+    fetchData()
+  }, [])
 
   function handleCallbackResponse(response) {
     let exists = false
-    const usersAPI = `http://127.0.0.1:8000/api/users/`    
-    const getUsers = axios.get(usersAPI)
-    axios.all([getUsers]).then(
-      axios.spread((...allData) => {
-        const allDataUsers = allData[0].data
-        setUsers(allDataUsers)
-      })
-    )
-
     let userObject = jwt_decode(response.credential);
-    if (userObject.hd === 'jeknowledge.com' && userObject.email_verified) {
-      if (users.map((user) => { return user.id_token === userObject.sub}) !== []) {
+    if (userObject.email_verified) {
+      if ((users.filter((user) => { return user.id_token === userObject.sub})).length !== 0) {
         exists = true
       }
       if (!exists) {
@@ -74,7 +80,7 @@ function Login() {
       document.getElementById("signInDiv"),
       { theme:"outline", size:"large", shape:"circle", logo_alignment: "center"},
     )
-  }, [])// eslint-disable-line react-hooks/exhaustive-deps
+  }, [users])// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className='login-page'>
