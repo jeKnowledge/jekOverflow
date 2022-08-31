@@ -226,6 +226,7 @@ def question_list(request, format=None):
 
     elif request.method == 'POST':
 
+        ### -------------------------
         # validate the header Authorization and if it's not valid throw an error
         if 'Authorization' not in request.headers:
             return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!!111!1111!'})
@@ -234,16 +235,21 @@ def question_list(request, format=None):
         # verify if the token is valid and if it's not valid throw an error
 
         try:
+            # verificar token no google
             idinfo = id_token.verify_oauth2_token(
                 token, requests.Request(), CLIENT_ID)
             userid = idinfo['sub']
+                # vejo se tenho user
             if userid:
-                # get the user from userid sub
+                # se tiver tiro o user da base de dados.
                 user = NewUser.objects.get(pk=userid)
 
+                # meto o user no objeto data.
                 request.data['user'] = userid
+                print(request.data)
+ ### -------------------------
 
-                # create a new question and serialize it
+                # create a new question and serialize it with the object request.data
                 serializer = QuestionSerializer(data=request.data)
                 request.data['vote'] = 0
 
