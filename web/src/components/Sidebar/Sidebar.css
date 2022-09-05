@@ -1,6 +1,6 @@
 .sidebar {
     height: auto;
-    width: 19%;
+    width: 240px;
     border-right: solid;
     border-width: 1px;
     border-color: rgb(174, 173, 170);
@@ -12,5 +12,29 @@
     margin-top: 10%;
 }
 .sidebar-bt {
-    margin-bottom: 4%;
+    margin-bottom: 3%;
+}
+.sidebar-button {
+    padding: 8px 16px;
+    background: #FFFFFF;
+    border-radius: 27px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: center;
+    color: #3E3C39;
+    border: none;
+}
+.sidebar-button:hover {
+    padding: 8px 16px;
+    background: rgba(62, 60, 57, 0.2);
+    border-radius: 27px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: center;
+    color: #3E3C39;
+    border: none;
 }

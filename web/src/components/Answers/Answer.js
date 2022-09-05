@@ -13,8 +13,10 @@ const Answer = ({ answer }) => {
 
   const voteUP = () => {
     const voteAPI = `http://127.0.0.1:8000/api/answers/${answer.id}/vote-up/`
+    const repUPAPI = `http://127.0.0.1:8000/api/users/${answer.user}/rep-up/`
     const getVote = axios.get(voteAPI)
-    axios.all([getVote]).then(
+    const getRep = axios.get(repUPAPI)
+    axios.all([getVote, getRep]).then(
       axios.spread((...allData) => {
         const allDataVote = allData[0].data
         setUPDAnswer(allDataVote)
@@ -24,8 +26,10 @@ const Answer = ({ answer }) => {
 
   const voteDown = () => {
     const voteAPI = `http://127.0.0.1:8000/api/answers/${answer.id}/vote-down/`
+    const repDOWNAPI = `http://127.0.0.1:8000/api/users/${answer.user}/rep-down/`
     const getVote = axios.get(voteAPI)
-    axios.all([getVote]).then(
+    const getRep = axios.get(repDOWNAPI)
+    axios.all([getVote, getRep]).then(
       axios.spread((...allData) => {
         const allDataVote = allData[0].data
         setUPDAnswer(allDataVote)
@@ -73,7 +77,7 @@ const Answer = ({ answer }) => {
           ))}
         </div>
         <div className='space'></div>
-        <MakeNewComment id={answer.id} user={answer.user}/>
+        <MakeNewComment id={answer.id}/>
       </div>
     </div>
   )

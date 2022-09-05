@@ -7,21 +7,17 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
 
-import ativoN from './../../assets/img/ativoN.png'
-//import ativoP from './../../assets/img/ativoP.png'
-import recompN from './../../assets/img/recompN.png'
-//import recompP from './../../assets/img/recompP.png'
-//import recentN from './../../assets/img/recentN.png'
+import ativoP from './../../assets/img/ativoP.png'
+import recompP from './../../assets/img/recompP.png'
 import recentP from './../../assets/img/recentP.png'
-import srespN from './../../assets/img/srespN.png'
-//import srespP from './../../assets/img/srespP.png'
+import srespP from './../../assets/img/srespP.png'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllQuestionsPage = () => {
     let [questions, setQuestions] = useState([])
     let [result, setResult] = useState(null)
-    const [sorted, setSorted] = useState("");
+    const [sorted, setSorted] = useState("time");
 
     const sortByTime = () => {
       setSorted("time");
@@ -60,16 +56,16 @@ const AllQuestionsPage = () => {
         });
         setQuestions(questionsCopy);
       }
-
-    useEffect(() => {
-        getQuestions()
-    }, [])
     
     let getQuestions = async() => {
         let response = await fetch('http://127.0.0.1:8000/api/questions/')
         let data = await response.json()
         setQuestions(data)
     }
+
+    useEffect(() => {
+        getQuestions()
+    }, [])
 
     return (
     <div className='all-questions-page'>
@@ -83,20 +79,20 @@ const AllQuestionsPage = () => {
                 </div>
                 <div className='bottom-content-mid'>
                     {sorted === 'time' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByTime}><img src={recentP} alt="recentP"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByTime}><img src={recentP} alt="recentP"/></Button></div>
+                        <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByTime}><img src={recentP} alt="recentP"/></Button></div> :
+                        <div ><button className='filter-button' onClick={sortByTime}>Recentes</button></div>
                     }
                     {sorted === '' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompN} alt="recompN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompN} alt="recompN"/></Button></div>    
+                        <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompP} alt="recompN"/></Button></div> :
+                        <div ><button className='filter-button' onClick={null}>Com Recompensa</button></div>   
                     }
                     {sorted === 'actives' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoN} alt="ativoN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoN} alt="ativoN"/></Button></div>
+                        <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoP} alt="ativoN"/></Button></div> :
+                        <div ><button className='filter-button' onClick={sortByActives}>Ativas</button></div>
                     }
                     {sorted === 'answers' ?
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByAnswers}><img src={srespN} alt="srespN"/></Button></div> :
-                        <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByAnswers}><img src={srespN} alt="srespN"/></Button></div>
+                        <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByAnswers}><img src={srespP} alt="srespN"/></Button></div> :
+                        <div ><button className='filter-button' onClick={sortByAnswers}>Sem Resposta</button></div>
                     }
                 </div>
                 <div className='aqp-content-body'>

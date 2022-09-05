@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Navbar from '../../components/Navbar/Navbar'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
@@ -11,8 +11,6 @@ import './QuestionPage.css'
 import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
 
 const QuestionPage = () => {
-    const location = useLocation()
-    const { user } = location.state
     let { id } = useParams()
     let [usertoken, setUsertoken] = useState('');
     let [qUser, setqUser] = useState(null);
@@ -25,8 +23,10 @@ const QuestionPage = () => {
 
     const voteUP = () => {
       const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-up/`
+      const repUPAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-up/`
       const getVote = axios.get(voteAPI)
-      axios.all([getVote]).then(
+      const getRep = axios.get(repUPAPI)
+      axios.all([getVote, getRep]).then(
         axios.spread((...allData) => {
           const allDataVote = allData[0].data
           setQuestion(allDataVote)
@@ -36,8 +36,10 @@ const QuestionPage = () => {
 
     const voteDown = () => {
       const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-down/`
+      const repDOWNAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-down/`
       const getVote = axios.get(voteAPI)
-      axios.all([getVote]).then(
+      const getRep = axios.get(repDOWNAPI)
+      axios.all([getVote, getRep]).then(
         axios.spread((...allData) => {
           const allDataVote = allData[0].data
           setQuestion(allDataVote)
@@ -133,11 +135,11 @@ const QuestionPage = () => {
                 <div className='answers-list'>
                     {answers.map((answer, index) => (
                         answer.question === Number(id)
-                        ? (<Answer key={index} answer={answer} user={user}/>)
+                        ? (<Answer key={index} answer={answer}/>)
                         : null
                     ))}
                 </div>
-                <div className='qp-mna' ><MakeNewAnswer user={user}/></div>
+                <div className='qp-mna' ><MakeNewAnswer/></div>
             </div>
         </div>
     </div>

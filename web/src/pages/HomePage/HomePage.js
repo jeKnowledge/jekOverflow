@@ -7,33 +7,23 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
 
-import hotN from './../../assets/img/hotN.png'
-//import hotP from './../../assets/img/hotP.png'
-//import interesN from './../../assets/img/interesN.png'
+import hotP from './../../assets/img/hotP.png'
 import interesP from './../../assets/img/interesP.png'
-import mesN from './../../assets/img/mesN.png'
-//import mesP from './../../assets/img/mesP.png'
-import recompN from './../../assets/img/recompN.png'
-import recompNH from './../../assets/img/recompNH.png'
-//import recompP from './../../assets/img/recompP.png'
-import semaN from './../../assets/img/semaN.png'
-//import semaP from './../../assets/img/semaP.png'
+import mesP from './../../assets/img/mesP.png'
+import recompP from './../../assets/img/recompP.png'
+import semaP from './../../assets/img/semaP.png'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { getUser } from '../../utility/utils'
+import { useNavigate } from 'react-router-dom'
 
 const HomePage = () => {
     const [questions, setQuestions] = useState([]);
-    const [sorted, setSorted] = useState("");
-    const [user, setUser] = useState(null);
+    const [sorted, setSorted] = useState('view');
     const navigate = useNavigate();
-    const location = useLocation()
 
     useEffect(() => {
         getQuestions();
-        getUser(setUser);
-    }, [location])
+    }, [])
 
     const sortByView = () => {
         setSorted("view");
@@ -98,31 +88,6 @@ const HomePage = () => {
         )
     }
 
-    /* const getUser = () => {
-        const usersAPI = `http://127.0.0.1:8000/api/users/`
-    
-        const getUsers = axios.get(usersAPI)
-        axios.all([getUsers]).then(
-          axios.spread((...allData) => {
-            const allDataUsers = allData[0].data
-    
-            allDataUsers.map((user) => (
-                (user.is_active)
-                ? setUser(user)
-                : null
-            ))
-          })
-        )
-    } */
-
-    const funcCons = () => {
-        document.getElementById("hp-img2").src = { recompNH }
-    }
-
-    const funcCons2 = () => {
-        document.getElementById("hp-img2").src = { recompN }
-    }
-
     return (
         <div className='homepage'>
             <div className='top'> <Navbar /> </div>
@@ -131,28 +96,28 @@ const HomePage = () => {
                 <div className='bottom-content'>
                     <div className='bottom-content-top'>
                         <div className='bct1'><h1 className='title'>Perguntas Populares</h1></div>
-                        <div className='bct2'><Button variant="btn btn-default" size="sm" style={{ padding: '0px', border: 'none' }} onClick={() => { navigate('/make-question/', { state: user.id_token }) }}><img src={qbutton} alt="qbutton" /></Button></div>
+                        <div className='bct2'><Button variant="btn btn-default" size="sm" style={{ padding: '0px', border: 'none' }} onClick={() => { navigate('/make-question/') }}><img className='make-question-button' src={qbutton} alt="qbutton" /></Button></div>
                     </div>
                     <div className='bottom-content-mid'>
                         {sorted === 'view' ?
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByView}><img src={interesP} alt="interesP" /></Button></div> :
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByView}><img src={interesP} alt="interesP" /></Button></div>
+                            <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByView}><img src={interesP} alt="interesP" /></Button></div> :
+                            <div ><button className='filter-button' onClick={sortByView}>Interessante</button></div>
                         }
                         {sorted === 'recomp' ?
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }}><img src={recompN} alt="recompN" /></Button></div> :
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }}><img id="hp-img2" src={recompN} onMouseOver={funcCons} onMouseOut={funcCons2} alt="recompN" /></Button></div>
+                            <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }}><img src={recompP} alt="recompN" /></Button></div> :
+                            <div ><button className='filter-button'>Com Recompensa</button></div>
                         }
                         {sorted === 'vote' ?
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByVote}><img src={hotN} alt="hotN" /></Button></div> :
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByVote}><img src={hotN} alt="hotN" /></Button></div>
+                            <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByVote}><img src={hotP} alt="hotN" /></Button></div> :
+                            <div ><button className='filter-button' onClick={sortByVote}>Hot</button></div>
                         }
                         {sorted === 'week' ?
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByWeek}><img src={semaN} alt="semaN" /></Button></div> :
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByWeek}><img src={semaN} alt="semaN" /></Button></div>
+                            <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByWeek}><img src={semaP} alt="semaN" /></Button></div> :
+                            <div ><button className='filter-button' onClick={sortByWeek}>Semana</button></div>
                         }
                         {sorted === 'month' ?
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByMonth}><img src={mesN} alt="mesN" /></Button></div> :
-                            <div className='bct3'><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByMonth}><img src={mesN} alt="mesN" /></Button></div>
+                            <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByMonth}><img src={mesP} alt="mesN" /></Button></div> :
+                            <div ><button className='filter-button' onClick={sortByMonth}>Mês</button></div>
                         }
                     </div>
                     <div className='content-body'>

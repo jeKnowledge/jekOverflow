@@ -20,19 +20,19 @@ const Sidebar = (props) => {
             <div className='sidebar-list'>
                 {(props.page === 'home') ?
                 <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/home/')}}><img src={homeP} alt="homeP"/></Button></div> :
-                <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/home/')}}><img src={homeN} alt="homeN"/></Button></div>
+                <div className='sidebar-bt'><button className='sidebar-button' onClick={()=>{navigate('/home/')}}>Home</button></div>
                 }
                 {(props.page === 'questions') ?
                 <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/questions/')}}><img src={pergP} alt="pergP"/></Button></div> :
-                <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/questions/')}}><img src={pergN} alt="pergN"/></Button></div>
+                <div className='sidebar-bt'><button className='sidebar-button' onClick={()=>{navigate('/questions/')}}>Perguntas</button></div>
                 }
                 {(props.page === 'users') ?
                 <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/users/')}}><img src={utilizP} alt="utilizP"/></Button></div> :
-                <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/users/')}}><img src={utilizN} alt="utilizN"/></Button></div>
+                <div className='sidebar-bt'><button className='sidebar-button' onClick={()=>{navigate('/users/')}}>Utilizadores</button></div>
                 }
                 {(props.tags === 'tags') ?
                 <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/tags/')}}><img src={tagP} alt="tagP"/></Button></div> :
-                <div className='sidebar-bt'><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} onClick={()=>{navigate('/tags/')}}><img src={tagN} alt="tagN"/></Button></div>
+                <div className='sidebar-bt'><button className='sidebar-button' onClick={()=>{navigate('/tags/')}}>Tags</button></div>
                 }
             </div>
         </div>

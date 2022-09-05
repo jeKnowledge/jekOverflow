@@ -7,9 +7,9 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class NewUser(models.Model):
     id_token = models.CharField(primary_key=True, max_length=150, unique=True)
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150)
     email = models.EmailField(_('email address'), unique=True)
-    image = models.CharField(max_length=150, unique=True)
+    image = models.CharField(max_length=150)
     start_date = models.DateTimeField(default=timezone.now)
     about = models.TextField(_('about'), max_length=500, default='About the User')
     is_staff = models.BooleanField(default=False)

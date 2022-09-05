@@ -8,15 +8,10 @@ import Button from 'react-bootstrap/Button';
 import UserData from "../../components/UserData/UserData";
 
 import user_todasP from "../../assets/img/user_todasP.png"
-//import user_todasN from "../../assets/img/user_todasN.png"
-import user_pergN from "../../assets/img/user_pergN.png"
-//import user_pergP from "../../assets/img/user_pergP.png"
-import user_respN from "../../assets/img/user_respN.png"
-//import user_respP from "../../assets/img/user_respP.png"
+import user_pergP from "../../assets/img/user_pergP.png"
+import user_respP from "../../assets/img/user_respP.png"
 import user_pontP from "../../assets/img/user_pontP.png"
-//import user_pontN from "../../assets/img/user_pontN.png"
-import user_rectN from "../../assets/img/user_rectN.png"
-//import user_rectP from "../../assets/img/user_rectP.png"
+import user_rectP from "../../assets/img/recentP.png"
 
 const UserPage = () => {
   let { id } = useParams();
@@ -25,8 +20,8 @@ const UserPage = () => {
   let [userImage, setUserImage] = useState("")
   let [userAbout, setUserAbout] = useState("")
 
-  const [sorted, setSorted] = useState("all")
-  const [filter, setFilter] = useState("points")
+  const [sorted, setSorted] = useState("points")
+  const [filter, setFilter] = useState("all")
 
   const [data, setData] = useState([])
 
@@ -167,24 +162,24 @@ const UserPage = () => {
                 <div className="tbc-title1">Top Publicações</div>
                 <div className="tbc-filters">
                 {filter === 'all' ?
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAll}><img src={user_todasP} alt="user_todasP"/></Button></div> :
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAll}><img src={user_todasP} alt="user_todasP"/></Button></div>
+                    <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAll}><img src={user_todasP} alt="user_todasP"/></Button></div> :
+                    <div ><button className='filter-button' onClick={filterAll}>Todas</button></div>
                 }
                 {filter === 'questions' ?
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterQuestions}><img src={user_pergN} alt="user_pergN"/></Button></div> :
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterQuestions}><img src={user_pergN} alt="user_pergN"/></Button></div>    
+                    <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterQuestions}><img src={user_pergP} alt="user_pergN"/></Button></div> :
+                    <div ><button className='filter-button' onClick={filterQuestions}>Perguntas</button></div>
                 }
                 {filter === 'answers' ?
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAnswers}><img src={user_respN} alt="user_respN"/></Button></div> :
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAnswers}><img src={user_respN} alt="user_respN"/></Button></div>
+                    <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={filterAnswers}><img src={user_respP} alt="user_respN"/></Button></div> :
+                    <div ><button className='filter-button' onClick={filterAnswers}>Respostas</button></div>
                 }
                 {sorted === 'points' ?
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortPoints}><img src={user_pontP} alt="user_pontP"/></Button></div> :
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortPoints}><img src={user_pontP} alt="user_pontP"/></Button></div>
+                    <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortPoints}><img src={user_pontP} alt="user_pontP"/></Button></div> :
+                    <div ><button className='filter-button' onClick={sortPoints}>Pontuação</button></div>
                 }
                 {sorted === 'recent' ?
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortRecents}><img src={user_rectN} alt="user_rectN"/></Button></div> :
-                    <div className='bct3'><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortRecents}><img src={user_rectN} alt="user_rectN"/></Button></div>
+                    <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortRecents}><img src={user_rectP} alt="user_rectN"/></Button></div> :
+                    <div ><button className='filter-button' onClick={sortRecents}>Recentes</button></div>
                 }
                 </div>
                 <div className="user-qa">

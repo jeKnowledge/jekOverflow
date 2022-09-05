@@ -4,21 +4,16 @@ import './MakeQuestionPage.css'
 import axios from "axios";
 import Button from 'react-bootstrap/Button'
 import qbutton from './../../assets/img/qbutton.png'
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { getUserFromLocalStorage } from '../../utility/utils';
 
 const MakeQuestionPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const location = useLocation();
   const navigate = useNavigate();
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = () => {
     const token = localStorage.getItem('Authorization');
-
-    const user_id = getUserFromLocalStorage().sub
 
     axios.post(`http://127.0.0.1:8000/api/questions/`, {
       'title': title,
@@ -27,12 +22,12 @@ const MakeQuestionPage = () => {
       'created': new Date(),
       'updated': new Date()
     },
-      {
-        headers: {
-          "Authorization": token,
-          "Content-Type": 'application/json'
-        }
+    {
+      headers: {
+        "Authorization": token,
+        "Content-Type": 'application/json'
       }
+    }
     ).then((response) => {
       console.log(response.data)
       if (response.statusText === "Created") {

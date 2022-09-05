@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../Navbar/Navbar.css'
 import logo from './../../assets/img/jklogo.png'
 import SearchBar from '../Searchbar/Searchbar'
-import { getUser, getUserFromLocalStorage, logOut } from '../../utility/utils'
+import { getUserFromLocalStorage } from '../../utility/utils'
 import { IoIosLogOut } from 'react-icons/io'
 import { AuthContext } from '../AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -10,7 +10,6 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Navbar = (props) => {
-  const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [userImage, setUserImage] = useState(null)
   const [userPage, setUserPage] = useState('')
@@ -25,7 +24,7 @@ const Navbar = (props) => {
       setUserImage(user.picture)
       setUserPage(`/users/${user.sub}`)
     }
-  }, [user])
+  }, [])
 
   return (
     <nav className='nav'>

@@ -5,20 +5,20 @@ import './MakeNewComment.css'
 const MakeNewComment = (props) => {
     const [body, setBody] = useState('')
     const [id, setId] = useState('')
-    const [user, setUser] = useState('')
 
     const enterPressed = (event3) => {
         if ((event3.keyCode === 13) && (body !== '')) {
+            const token = localStorage.getItem('Authorization');
+
             axios.post(`http://127.0.0.1:8000/api/comments/`, {
             'body': body,
             'answer': Number(id),
             'created': new Date(),
             'updated': new Date(),
-            'user': user
             },
             {
             headers: {
-                "Authorization": `AUTHORIZATION_KEY`,
+                "Authorization": token,
                 "Content-Type": 'application/json'
             }
             }
@@ -30,7 +30,6 @@ const MakeNewComment = (props) => {
 
     useEffect(() => {
         setId(props.id)
-        setUser(props.user)
     }, [props])
 
     return (

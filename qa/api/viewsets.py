@@ -226,41 +226,36 @@ def question_list(request, format=None):
 
     elif request.method == 'POST':
 
-        ### -------------------------
         # validate the header Authorization and if it's not valid throw an error
         if 'Authorization' not in request.headers:
-            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!!111!1111!'})
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!'})
+        
         # get the token from the header Authorization
         token = request.headers['Authorization']
+        
         # verify if the token is valid and if it's not valid throw an error
-
         try:
-            # verificar token no google
-            idinfo = id_token.verify_oauth2_token(
-                token, requests.Request(), CLIENT_ID)
+            # verify the token inside google
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             userid = idinfo['sub']
-                # vejo se tenho user
+            
+            # verify if there is a user
             if userid:
-                # se tiver tiro o user da base de dados.
-                user = NewUser.objects.get(pk=userid)
-
-                # meto o user no objeto data.
+                # set the data's user as the one verified
                 request.data['user'] = userid
-                print(request.data)
- ### -------------------------
 
                 # create a new question and serialize it with the object request.data
                 serializer = QuestionSerializer(data=request.data)
                 request.data['vote'] = 0
 
-                # verifies if the serialized data is valid and, if yes, save it
-                if serializer.is_valid() and request.data['vote'] == 0:
-                    serializer.save()
-                    return Response(serializer.data, status=status.HTTP_201_CREATED)
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
         except ValueError:
-            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!!111!1111!'})
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!'})
+
+    # verifies if the serialized data is valid and, if yes, save it
+    if serializer.is_valid() and request.data['vote'] == 0:
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -434,10 +429,34 @@ def answer_list(request, format=None):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # create a new answers and serialize it
-        serializer = AnswerSerializer(data=request.data)
-        request.data['vote'] = 0
+        # validate the header Authorization and if it's not valid throw an error
+        if 'Authorization' not in request.headers:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!'})
+        
+        # get the token from the header Authorization
+        token = request.headers['Authorization']
+        
+        # verify if the token is valid and if it's not valid throw an error
+        try:
+            # verify the token in google
+            print('verifying.....')
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            userid = idinfo['sub']
+            print('verified!!')
+            
+            # verify if there is any user
+            if userid:
 
+                # adds the user in the data
+                request.data['user'] = userid
+                print(request.data)
+        
+            # create a new answers and serialize it
+            serializer = AnswerSerializer(data=request.data)
+            request.data['vote'] = 0
+        except ValueError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!'})
+    
     # verifies if the serialized data is valid and, if yes, save it
     if serializer.is_valid() and request.data['vote'] == 0:
         serializer.save()
@@ -541,8 +560,33 @@ def comment_list(request, format=None):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # create a new comment and serialize it
-        serializer = CommentSerializer(data=request.data)
+        # validate the header Authorization and if it's not valid throw an error
+        if 'Authorization' not in request.headers:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!'})
+        
+        # get the token from the header Authorization
+        token = request.headers['Authorization']
+        
+        # verify if the token is valid and if it's not valid throw an error
+        try:
+            # verify the token in google
+            print('verifying.....')
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            userid = idinfo['sub']
+            print('verified!!')
+
+            # verify if there is any user
+            if userid:
+
+                # adds the user in the data
+                request.data['user'] = userid
+                print(request.data)
+
+            # create a new comment and serialize it
+            serializer = CommentSerializer(data=request.data)
+
+        except ValueError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!'})
 
     # verifies if the serialized data is valid and, if yes, save it
     if serializer.is_valid():

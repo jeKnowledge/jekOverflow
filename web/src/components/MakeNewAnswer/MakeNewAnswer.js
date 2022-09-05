@@ -5,7 +5,7 @@ import pbutton from './../../assets/img/pbutton.png'
 import Button from 'react-bootstrap/Button'
 import './MakeNewAnswer.css'
 
-const MakeNewAnswer = (props) => {
+const MakeNewAnswer = () => {
     let { id } = useParams()
     const [body, setBody] = useState('');
 
@@ -16,24 +16,24 @@ const MakeNewAnswer = (props) => {
     }
 
     const handleSubmit = (event) => {
-        axios.post(`http://127.0.0.1:8000/api/answers/`, {
-          'body': body,
-          'question': Number(id),
-          'created': new Date(),
-          'updated': new Date(),
-          'user': props.user
-          },
-          {
-            headers: {
-                "Authorization": `AUTHORIZATION_KEY`,
-                "Content-Type": 'application/json'
-            }
+      const token = localStorage.getItem('Authorization');
+      axios.post(`http://127.0.0.1:8000/api/answers/`, {
+        'body': body,
+        'question': Number(id),
+        'created': new Date(),
+        'updated': new Date(),
+        },
+        {
+          headers: {
+              "Authorization": token,
+              "Content-Type": 'application/json'
           }
-        )
-        .then(res => console.log(res))
-        .catch(error => console.err(error))
-        nanswersUpdate()
-      }
+        }
+      )
+      .then(res => console.log(res))
+      .catch(error => console.err(error))
+      nanswersUpdate()
+    }
 
     return (
         <div className='mna-container'>
