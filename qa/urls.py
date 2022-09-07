@@ -23,6 +23,12 @@ urlpatterns = [
     path('answers/<int:id>/vote-down/', viewsets.answer_voteDown),
     path('comments/', viewsets.comment_list),
     path('comments/<int:id>/', viewsets.comment),
+    path('questions-vote/', viewsets.qvote_list),
+    path('questions-vote/<int:id>/', viewsets.qvote),
+    path('questions-vote/<int:id>/<str:token>/', viewsets.qvote_filter),
+    path('answers-vote/', viewsets.avote_list),
+    path('answers-vote/<int:id>/', viewsets.avote),
+    path('answers-vote/<int:id>/<str:token>/', viewsets.avote_filter)
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

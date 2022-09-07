@@ -46,7 +46,6 @@ const AllQuestionsPage = () => {
             const getUsers = axios.get(usersAPI)
             axios.all([getUsers]).then(axios.spread((...allData) => {
                 if (allData[0].data.is_active) {
-                    console.log('a')
                     setResult(true)
                     console.log(result)
                 }

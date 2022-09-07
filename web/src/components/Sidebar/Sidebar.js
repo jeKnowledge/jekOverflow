@@ -2,13 +2,9 @@ import React from 'react'
 import './Sidebar.css'
 import Button from 'react-bootstrap/Button'
 
-import homeN from './../../assets/img/homeN.png'
 import homeP from './../../assets/img/homeP.png'
-import pergN from './../../assets/img/pergN.png'
 import pergP from './../../assets/img/pergP.png'
-import utilizN from './../../assets/img/utilizN.png'
 import utilizP from './../../assets/img/utilizP.png'
-import tagN from './../../assets/img/tagN.png'
 import tagP from './../../assets/img/tagP.png'
 import { useNavigate } from 'react-router-dom'
 

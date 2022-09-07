@@ -39,6 +39,11 @@ class Question(models.Model):
     def published(self):
         return (timezone.now() - self.updated).total_seconds()
 
+class Question_Vote(models.Model):
+    user = models.ForeignKey(NewUser, on_delete=CASCADE)
+    question = models.ForeignKey(Question, on_delete=CASCADE)
+    vote = models.IntegerField()
+
 class Answer(models.Model):
     user = models.ForeignKey(NewUser, on_delete=CASCADE)
     question = models.ForeignKey(Question, on_delete=CASCADE)
@@ -50,6 +55,10 @@ class Answer(models.Model):
     def __str__(self):
         return self.body[0:50]
  
+class Answer_Vote(models.Model):
+    user = models.ForeignKey(NewUser, on_delete=CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=CASCADE)
+    vote = models.IntegerField()
 
 class Comment(models.Model):
     user = models.ForeignKey(NewUser, on_delete=CASCADE)

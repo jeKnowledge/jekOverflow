@@ -6,9 +6,12 @@ import Button from 'react-bootstrap/Button'
 import Answer from '../../components/Answers/Answer'
 import axios from 'axios'
 import arrowup from './../../assets/img/arrowup.png'
+import arrowupP from './../../assets/img/arrowupP.png'
 import arrowdown from './../../assets/img/arrowdown.png'
+import arrowdownP from './../../assets/img/arrowdownP.png'
 import './QuestionPage.css'
 import MakeNewAnswer from '../../components/MakeNewAnswer/MakeNewAnswer'
+import { getUserFromLocalStorage } from '../../utility/utils'
 
 const QuestionPage = () => {
     let { id } = useParams()
@@ -20,47 +23,157 @@ const QuestionPage = () => {
     let [userPage, setUserPage] = useState('')
     let [question, setQuestion] = useState(null);
     let [answers, setAnswers] = useState([]);
+    const [voteFilter, setVoteFilter] = useState(null);
 
     const voteUP = () => {
-      const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-up/`
-      const repUPAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-up/`
-      const getVote = axios.get(voteAPI)
-      const getRep = axios.get(repUPAPI)
-      axios.all([getVote, getRep]).then(
-        axios.spread((...allData) => {
-          const allDataVote = allData[0].data
-          setQuestion(allDataVote)
+      if (voteFilter.length !== 0 && voteFilter[0].vote === 1) return
+
+      const auth = localStorage.getItem('Authorization');
+      if (voteFilter.length !== 0 && voteFilter[0].vote === -1) {
+        axios.put(`http://127.0.0.1:8000/api/questions-vote/${voteFilter[0].id}/`, {
+          'user': getUserFromLocalStorage().sub,
+          'question': id,
+          'vote': 1
+          },
+          {
+            headers: {
+                "Authorization": auth,
+                "Content-Type": 'application/json'
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-up/`
+          const repUPAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-up/`
+          const getVote = axios.get(voteAPI)
+          const getRep = axios.get(repUPAPI)
+          axios.all([getVote, getRep]).then(
+            axios.spread((...allData) => {
+              const allDataVote = allData[0].data
+              setQuestion(allDataVote)
+            })
+          )
+
+          window.location.reload(false)
         })
-      )
+        .catch(error => console.error(error))
+      }
+      else {
+        axios.post(`http://127.0.0.1:8000/api/questions-vote/`, {
+          'user': getUserFromLocalStorage().sub,
+          'question': id,
+          'vote': 1
+          },
+          {
+            headers: {
+                "Authorization": auth,
+                "Content-Type": 'application/json'
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-up/`
+          const repUPAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-up/`
+          const getVote = axios.get(voteAPI)
+          const getRep = axios.get(repUPAPI)
+          axios.all([getVote, getRep]).then(
+            axios.spread((...allData) => {
+              const allDataVote = allData[0].data
+              setQuestion(allDataVote)
+            })
+          )
+
+          window.location.reload(false)
+        })
+        .catch(error => console.error(error))
+      }
     }
 
     const voteDown = () => {
-      const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-down/`
-      const repDOWNAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-down/`
-      const getVote = axios.get(voteAPI)
-      const getRep = axios.get(repDOWNAPI)
-      axios.all([getVote, getRep]).then(
-        axios.spread((...allData) => {
-          const allDataVote = allData[0].data
-          setQuestion(allDataVote)
+      if (voteFilter.length !== 0 && voteFilter[0].vote === -1) return
+
+      const auth = localStorage.getItem('Authorization');
+      if (voteFilter.length !== 0 && voteFilter[0].vote === 1) {
+        axios.put(`http://127.0.0.1:8000/api/questions-vote/${voteFilter[0].id}/`, {
+          'user': getUserFromLocalStorage().sub,
+          'question': id,
+          'vote': -1
+          },
+          {
+            headers: {
+                "Authorization": auth,
+                "Content-Type": 'application/json'
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-down/`
+          const repDOWNAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-down/`
+          const getVote = axios.get(voteAPI)
+          const getRep = axios.get(repDOWNAPI)
+          axios.all([getVote, getRep]).then(
+            axios.spread((...allData) => {
+              const allDataVote = allData[0].data
+              setQuestion(allDataVote)
+            })
+          )
+
+          window.location.reload(false)
         })
-      )
+        .catch(error => console.error(error))
+      }
+      else {
+        axios.post(`http://127.0.0.1:8000/api/questions-vote/`, {
+          'user': getUserFromLocalStorage().sub,
+          'question': id,
+          'vote': -1
+          },
+          {
+            headers: {
+                "Authorization": auth,
+                "Content-Type": 'application/json'
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          const voteAPI = `http://127.0.0.1:8000/api/questions/${id}/vote-down/`
+          const repDOWNAPI = `http://127.0.0.1:8000/api/users/${question.user}/rep-down/`
+          const getVote = axios.get(voteAPI)
+          const getRep = axios.get(repDOWNAPI)
+          axios.all([getVote, getRep]).then(
+            axios.spread((...allData) => {
+              const allDataVote = allData[0].data
+              setQuestion(allDataVote)
+            })
+          )
+
+          window.location.reload(false)
+        }
+        )
+        .catch(error => console.error(error))
+      }
     }
 
     useEffect( () => {
       const fetchData = () => {
+        const user = getUserFromLocalStorage()
+
         const questionAPI = `http://127.0.0.1:8000/api/questions/${id}/`
         const answersAPI = `http://127.0.0.1:8000/api/answers/`
+        const voteFilterAPI = `http://127.0.0.1:8000/api/questions-vote/${id}/${user.sub}/`
     
         const getQuestion = axios.get(questionAPI)
         const getAsnwers = axios.get(answersAPI)
-        axios.all([getQuestion, getAsnwers]).then(
+        const getVoteFilter = axios.get(voteFilterAPI)
+        axios.all([getQuestion, getAsnwers, getVoteFilter]).then(
           axios.spread((...allData) => {
-            const allDataQuestion = allData[0].data
-            const allDataAnswers = allData[1].data
-    
-            setQuestion(allDataQuestion)
-            setAnswers(allDataAnswers)
+            setQuestion(allData[0].data)
+            setAnswers(allData[1].data)
+            setVoteFilter(allData[2].data)
           })
         )
       }
@@ -118,9 +231,9 @@ const QuestionPage = () => {
                 </div>
                 <div className='qp-body'>
                     <div className='qp-body-left'>
-                        <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={arrowup} alt="arrowUP" onClick={voteUP}/></Button>
+                        {voteFilter? <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={voteFilter[0]?.vote === 1? arrowupP : arrowup} alt="arrowUP" onClick={voteUP}/></Button>:null}
                         <p className='qp-vote'>{question?.vote}</p>
-                        <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={arrowdown} alt="arrowDOWN" onClick={voteDown}/></Button>
+                        {voteFilter? <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={voteFilter[0]?.vote === -1? arrowdownP : arrowdown} alt="arrowDOWN" onClick={voteDown}/></Button>:null}
                     </div>
                     <div className='qp-body-right'><p>{question?.body}</p></div>
                 </div>

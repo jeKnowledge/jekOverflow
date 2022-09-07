@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from qa.api.serializers import NewUserSerializer, QuestionSerializer, AnswerSerializer, CommentSerializer
-from qa.models import NewUser, Question, Answer, Comment
+from qa.api.serializers import NewUserSerializer, QuestionSerializer, AnswerSerializer, CommentSerializer, Question_VoteSerializer, Answer_VoteSerializer
+from qa.models import NewUser, Question, Answer, Comment, Question_Vote, Answer_Vote
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
@@ -439,17 +439,14 @@ def answer_list(request, format=None):
         # verify if the token is valid and if it's not valid throw an error
         try:
             # verify the token in google
-            print('verifying.....')
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             userid = idinfo['sub']
-            print('verified!!')
             
             # verify if there is any user
             if userid:
 
                 # adds the user in the data
                 request.data['user'] = userid
-                print(request.data)
         
             # create a new answers and serialize it
             serializer = AnswerSerializer(data=request.data)
@@ -570,17 +567,14 @@ def comment_list(request, format=None):
         # verify if the token is valid and if it's not valid throw an error
         try:
             # verify the token in google
-            print('verifying.....')
             idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
             userid = idinfo['sub']
-            print('verified!!')
 
             # verify if there is any user
             if userid:
 
                 # adds the user in the data
                 request.data['user'] = userid
-                print(request.data)
 
             # create a new comment and serialize it
             serializer = CommentSerializer(data=request.data)
@@ -616,3 +610,159 @@ def comment(request, id, format=None):
     elif request.method == 'DELETE':
         comment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# question_vote
+@api_view(['GET', 'POST'])
+def qvote_list(request, format=None):
+    ''' view that gives us the possibility of get a 
+        list of all question_votes and/or add new ones'''
+
+    if request.method == 'GET':
+        # get all the questions on the data base and serialize the data to return it
+        qvote = Question_Vote.objects.all()
+        serializer = Question_VoteSerializer(qvote, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        # validate the header Authorization and if it's not valid throw an error
+        if 'Authorization' not in request.headers:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!'})
+        
+        # get the token from the header Authorization
+        token = request.headers['Authorization']
+        
+        # verify if the token is valid and if it's not valid throw an error
+        try:
+            # verify the token inside google
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            userid = idinfo['sub']
+            
+            # verify if there is a user
+            if userid:
+                # set the data's user as the one verified
+                request.data['user'] = userid
+
+                # create a new question and serialize it with the object request.data
+                serializer = Question_VoteSerializer(data=request.data)
+
+        except ValueError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!'})
+
+    # verifies if the serialized data is valid and, if yes, save it
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def qvote(request, id, format=None):
+    try:
+        qvote = Question_Vote.objects.get(pk=id)
+    except Question_Vote.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = Question_VoteSerializer(qvote)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = Question_VoteSerializer(qvote, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        qvote.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def qvote_filter(request, id, token, format=None):
+    if request.method == 'GET':
+        try:
+            qvote_filter_question = Question_Vote.objects.filter(question=id)
+            qvote_filter_user = qvote_filter_question.filter(user=token)
+            serializer = Question_VoteSerializer(qvote_filter_user, many=True)
+            return Response(serializer.data)
+        except Question_Vote.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+# answer_vote
+@api_view(['GET', 'POST'])
+def avote_list(request, format=None):
+    ''' view that gives us the possibility of get a 
+        list of all question_votes and/or add new ones'''
+
+    if request.method == 'GET':
+        # get all the questions on the data base and serialize the data to return it
+        avote = Answer_Vote.objects.all()
+        serializer = Answer_VoteSerializer(avote, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        # validate the header Authorization and if it's not valid throw an error
+        if 'Authorization' not in request.headers:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'No Authorization token given in Headers!'})
+        
+        # get the token from the header Authorization
+        token = request.headers['Authorization']
+        
+        # verify if the token is valid and if it's not valid throw an error
+        try:
+            # verify the token inside google
+            print('verifying...')
+            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            userid = idinfo['sub']
+            print('verified!!')
+            
+            # verify if there is a user
+            if userid:
+                # set the data's user as the one verified
+                request.data['user'] = userid
+
+                # create a new question and serialize it with the object request.data
+                serializer = Answer_VoteSerializer(data=request.data)
+
+        except ValueError:
+            return Response(status=status.HTTP_401_UNAUTHORIZED, data={'message': 'Invalid Authorization token given in Headers!'})
+
+    # verifies if the serialized data is valid and, if yes, save it
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def avote(request, id, format=None):
+    try:
+        avote = Answer_Vote.objects.get(pk=id)
+    except Answer_Vote.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = Answer_VoteSerializer(avote)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = Answer_VoteSerializer(avote, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        avote.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def avote_filter(request, id, token, format=None):
+    if request.method == 'GET':
+        try:
+            avote_filter_answer = Answer_Vote.objects.filter(answer=id)
+            avote_filter_user = avote_filter_answer.filter(user=token)
+            serializer = Answer_VoteSerializer(avote_filter_user, many=True)
+            return Response(serializer.data)
+        except Answer_Vote.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
