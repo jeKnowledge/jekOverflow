@@ -51,6 +51,7 @@ class Answer(models.Model):
     created = models.CharField(max_length=100)
     updated = models.CharField(max_length=100)
     vote = models.IntegerField(0)
+    accepted = models.BooleanField(default=False)
 
     def __str__(self):
         return self.body[0:50]

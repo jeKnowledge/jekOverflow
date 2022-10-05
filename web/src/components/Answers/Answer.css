@@ -14,6 +14,13 @@
     border-right: 0;
     border-top: 0;
 }
+.answer-body-accepted {
+    padding: 4px 16px;
+    border-width: 0px 4px;
+    border-style: solid;
+    border-color: #7CCCED;
+    border-radius: 10px;
+}
 .space {
     margin-bottom: 1%;
 }

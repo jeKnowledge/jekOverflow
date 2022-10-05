@@ -5,6 +5,7 @@ import arrowup from './../../assets/img/arrowup.png'
 import arrowdown from './../../assets/img/arrowdown.png'
 import arrowupP from './../../assets/img/arrowupP.png'
 import arrowdownP from './../../assets/img/arrowdownP.png'
+import check from './../../assets/img/check.png'
 import './Answer.css'
 import MakeNewComment from '../MakeNewComment/MakeNewComment'
 import Comments from '../Comments/Comments'
@@ -12,6 +13,7 @@ import { getUserFromLocalStorage } from '../../utility/utils'
 
 const Answer = ({ answer }) => {
   let [upd_answer, setUPDAnswer] = useState(null)
+  const [questionUser, setQuestionUser] = useState(null);
   const [comments, setComments] = useState([])
   const [voteFilter, setVoteFilter] = useState(null);
 
@@ -143,6 +145,41 @@ const Answer = ({ answer }) => {
 
   }
 
+  const acceptAnswer = () => {
+    console.log('accept')
+    
+    const auth = localStorage.getItem('Authorization');
+    axios.put(`http://127.0.0.1:8000/api/answers/${answer.id}/`, {
+        'body': answer.body,
+        'question': answer.question,
+        'user': answer.user,
+        'created': answer.created,
+        'updated': answer.updated,
+        'vote': answer.vote,
+        'accepted': true
+      },
+      {
+        headers: {
+            "Authorization": auth,
+            "Content-Type": 'application/json'
+        }
+      }
+      )
+      .then((res) => {
+        console.log(res)
+        const answerAPI = `http://127.0.0.1:8000/api/answers/${answer.id}/`
+        const getAnswer = axios.get(answerAPI)
+        axios.all([getAnswer]).then(
+          axios.spread((...allData) => {
+            const allDataVote = allData[0].data
+            setUPDAnswer(allDataVote)
+          })
+        )
+        window.location.reload(false)
+      })
+      .catch(error => console.error(error))
+  }
+
   useEffect( () => {
     const fetchData = () => {
       const user = getUserFromLocalStorage()
@@ -166,6 +203,21 @@ const Answer = ({ answer }) => {
     fetchData()
   },[answer])
 
+  useEffect(() => {
+    const getQuestionUser = () => {
+      if(upd_answer) {
+        const userAPI = `http://127.0.0.1:8000/api/questions/${upd_answer?.question}/`
+        axios.get(userAPI)
+        .then((res) => {
+          setQuestionUser(res.data.user)
+        })
+        .catch(error => console.error(error))
+      }
+    }
+
+    getQuestionUser()
+  }, [upd_answer])
+
   return (
     <div>
       <div className='answer-container'>
@@ -173,8 +225,9 @@ const Answer = ({ answer }) => {
           {voteFilter? <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={voteFilter[0]?.vote === 1? arrowupP : arrowup} alt="arrowUP" onClick={voteUP}/></Button>:null}
           <p className='qp-vote'>{upd_answer?.vote}</p>
           {voteFilter? <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={voteFilter[0]?.vote === -1? arrowdownP : arrowdown} alt="arrowDOWN" onClick={voteDown}/></Button>:null}
+          {(questionUser === getUserFromLocalStorage().sub && !upd_answer.accepted)? <Button variant="text" size="small" style={{display: "flex", flexDirection: "column"}}><img src={check} alt="check" onClick={acceptAnswer}/></Button>:null}
         </div>
-        <div className='answer-body'>{upd_answer?.body}</div>
+        {upd_answer?.accepted? <div className='answer-body answer-body-accepted'>{upd_answer?.body}</div>:<div className='answer-body'>{upd_answer?.body}</div>}
       </div>
       <div className='answer-allcomments'>
         <div className='answer-comments' >

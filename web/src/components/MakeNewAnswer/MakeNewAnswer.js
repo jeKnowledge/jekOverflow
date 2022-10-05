@@ -22,6 +22,7 @@ const MakeNewAnswer = () => {
         'question': Number(id),
         'created': new Date(),
         'updated': new Date(),
+        'accepted': false
         },
         {
           headers: {

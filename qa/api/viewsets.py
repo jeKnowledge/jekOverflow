@@ -509,6 +509,7 @@ def answer_voteUp(request, id, format=None):
     request.data['question'] = answer.question.id
     request.data['created'] = answer.created
     request.data['updated'] = answer.updated
+    request.data['accepted'] = answer.accepted
 
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
@@ -537,6 +538,7 @@ def answer_voteDown(request, id, format=None):
     request.data['question'] = answer.question.id
     request.data['created'] = answer.created
     request.data['updated'] = answer.updated
+    request.data['accepted'] = answer.accepted
 
     # updates the data of an existing answer and verifies if it still valid
     serializer = AnswerSerializer(answer, data=request.data)
