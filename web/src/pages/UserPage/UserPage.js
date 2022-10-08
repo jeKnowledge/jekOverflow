@@ -6,7 +6,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Button from 'react-bootstrap/Button';
 import UserData from "../../components/UserData/UserData";
-
+import verMais from "../../assets/img/verMais.png";
 import user_todasP from "../../assets/img/user_todasP.png"
 import user_pergP from "../../assets/img/user_pergP.png"
 import user_respP from "../../assets/img/user_respP.png"
@@ -183,10 +183,11 @@ const UserPage = () => {
                 }
                 </div>
                 <div className="user-qa">
-                  {data.map((data) => (
+                  {data.slice(0,4).map((data) => (
                     (<UserData data={data} />)
                   ))}
                 </div>
+                <div className="all-pubs-btn"><Button variant="btn btn-default" size="sm" style={{padding: '0px', outline: 'none'}} onClick={null}><img src={verMais} alt="verMais"/></Button></div>
               </div>
             </div>
           </div>

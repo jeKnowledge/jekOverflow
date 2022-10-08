@@ -13,6 +13,7 @@
     border-left: 0;
     border-right: 0;
     border-top: 0;
+    padding: 8px 16px;
 }
 .answer-body-accepted {
     padding: 4px 16px;

@@ -83,6 +83,12 @@ const MakeQuestionPage = () => {
                   <input className='mq-text-tag-post' type="text" required />
                 </form>
               </div>
+              <div className='mqbc-title-body-tag'><h2>Recompensa (opcional)</h2></div>
+              <div className='mq-tag-com'><p>Queres que as pessoas respondam às tuas perguntas mais rapidamente? Dá-lhes um fino!</p></div>
+              <div className='flex'>
+                <div className="round"><input type="checkbox" id="checkbox" /><label for="checkbox"></label></div>
+                <p>Oferecer uma cerveja a quem responder corretamente.</p>
+              </div>
             </div>
           </div>
           <div className='send-button'>
