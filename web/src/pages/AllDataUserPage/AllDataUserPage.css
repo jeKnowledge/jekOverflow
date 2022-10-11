@@ -1,0 +1,24 @@
+.adup-bottom-content-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    padding: 3% 0 0 3%;
+}
+
+.adup-bct2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.adup-bottom-content-mid {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2%;
+}
+
+.adup-content-body {
+    margin-left: 3%;
+}

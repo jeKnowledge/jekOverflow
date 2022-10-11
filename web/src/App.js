@@ -7,6 +7,7 @@ import QuestionPage from "./pages/QuestionPage/QuestionPage";
 import MakeQuestionPage from "./pages/MakeQuestionPage/MakeQuestionPage";
 import AllQuestionsPage from "./pages/AllQuestionsPage/AllQuestionsPage";
 import AllUsersPage from "./pages/AllUsersPage/AllUsersPage";
+import AllDataUserPage from "./pages/AllDataUserPage/AllDataUserPage";
 import UserPage from "./pages/UserPage/UserPage";
 import TagsPage from "./pages/TagsPage/TagsPage"
 import LoginPage from "./pages/LoginPage/LoginPage"
@@ -32,6 +33,7 @@ function App() {
             <Route path="questions/" element={<AllQuestionsPage />} />
             <Route path="make-question/" element={<MakeQuestionPage />} />
             <Route path="users/:id/" element={<UserPage />} />
+            <Route path="users/:id/data" element={<AllDataUserPage />} />
             <Route path="users/" element={<AllUsersPage />} />
             <Route path="tags/" element={<TagsPage />} />
           </>

@@ -19,6 +19,14 @@ const AllQuestionsPage = () => {
     let [result, setResult] = useState(null)
     const [sorted, setSorted] = useState("time");
 
+    const filterBountied = () => {
+        setSorted("bountied");
+        const questionsCopy = [...questions].filter(question => {
+            return question.bountied === true
+        });
+        setQuestions(questionsCopy);
+    }
+
     const sortByTime = () => {
       setSorted("time");
       const questionsCopy = [...questions];
@@ -83,7 +91,7 @@ const AllQuestionsPage = () => {
                     }
                     {sorted === '' ?
                         <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={null}><img src={recompP} alt="recompN"/></Button></div> :
-                        <div ><button className='filter-button' onClick={null}>Com Recompensa</button></div>   
+                        <div ><button className='filter-button' onClick={filterBountied}>Com Recompensa</button></div>   
                     }
                     {sorted === 'actives' ?
                         <div ><Button variant="btn btn-default" size="sm" style={{padding: '0px'}} onClick={sortByActives}><img src={ativoP} alt="ativoN"/></Button></div> :
