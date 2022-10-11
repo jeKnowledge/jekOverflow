@@ -25,6 +25,14 @@ const HomePage = () => {
         getQuestions();
     }, [])
 
+    const filterBountied = () => {
+        setSorted("bountied");
+        const questionsCopy = [...questions].filter(question => {
+            return question.bountied === true
+        });
+        setQuestions(questionsCopy);
+    }
+
     const sortByView = () => {
         setSorted("view");
         const questionsCopy = [...questions];
@@ -105,7 +113,7 @@ const HomePage = () => {
                         }
                         {sorted === 'recomp' ?
                             <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }}><img src={recompP} alt="recompN" /></Button></div> :
-                            <div ><button className='filter-button'>Com Recompensa</button></div>
+                            <div ><button className='filter-button' onClick={filterBountied}>Com Recompensa</button></div>
                         }
                         {sorted === 'vote' ?
                             <div ><Button variant="btn btn-default" size="sm" style={{ padding: '0px' }} onClick={sortByVote}><img src={hotP} alt="hotN" /></Button></div> :

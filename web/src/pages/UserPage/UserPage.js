@@ -187,7 +187,7 @@ const UserPage = () => {
                     (<UserData data={data} />)
                   ))}
                 </div>
-                <div className="all-pubs-btn"><Button variant="btn btn-default" size="sm" style={{padding: '0px', outline: 'none'}} onClick={null}><img src={verMais} alt="verMais"/></Button></div>
+                <div className="all-pubs-btn"><Button variant="btn btn-default" size="sm" style={{padding: '0px',  border: 'none'}} href={`/users/${id}/data/`}><img src={verMais} alt="verMais"/></Button></div>
               </div>
             </div>
           </div>
