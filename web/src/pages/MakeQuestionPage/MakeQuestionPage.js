@@ -10,8 +10,11 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 const MakeQuestionPage = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [isChecked, setIsChecked ] = useState(false);
   const navigate = useNavigate();
 
+  const handleCheck = () => setIsChecked(current => !current);
+  
   const handleSubmit = () => {
     const token = localStorage.getItem('Authorization');
 
@@ -20,7 +23,8 @@ const MakeQuestionPage = () => {
       'body': body,
       'vote': 0,
       'created': new Date(),
-      'updated': new Date()
+      'updated': new Date(),
+      'bountied': isChecked
     },
     {
       headers: {
@@ -86,7 +90,7 @@ const MakeQuestionPage = () => {
               <div className='mqbc-title-body-tag'><h2>Recompensa (opcional)</h2></div>
               <div className='mq-tag-com'><p>Queres que as pessoas respondam às tuas perguntas mais rapidamente? Dá-lhes um fino!</p></div>
               <div className='flex'>
-                <div className="round"><input type="checkbox" id="checkbox" /><label for="checkbox"></label></div>
+                <div><label className='container'><input type="checkbox" value={isChecked} onChange={handleCheck}/><span className="checkmark"></span></label></div>
                 <p>Oferecer uma cerveja a quem responder corretamente.</p>
               </div>
             </div>
